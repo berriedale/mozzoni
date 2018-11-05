@@ -1,0 +1,12 @@
+with "aunit";
+with "gnattest_common.gpr";
+with "../../mozzoni.gpr";
+project test_mozzoni is
+
+   for Source_Dirs use
+     ("common");
+
+   for Languages use Gnattest_Common'Languages & ("Ada");
+   package Compiler renames Gnattest_Common.Compiler;
+
+end test_mozzoni;
