@@ -1,3 +1,4 @@
 = Mozzoni
 
+Mozzoni aims to be a fast and safe NoSQL data service.
 

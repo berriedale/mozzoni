@@ -11,8 +11,6 @@ with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 -- See https://redis.io/topics/protocol for a full outline of the protocl which
 -- must be parsed
 package Mozzoni.Parser is
-   
-   function Parse (Buffer : in Unbounded_String)
-                   return Mozzoni.Resp.Any_Resp_Type'Class;
+
 
 end Mozzoni.Parser;
