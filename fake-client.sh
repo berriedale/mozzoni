@@ -14,14 +14,36 @@ function send_buffer {
     echo -e ${1} | nc -q 1 ${HOSTNAME} ${PORT}
 }
 
-echo -n "Simple string.. "
-send_buffer "+OK\r\n"
-echo ".. ok"
+function ok {
+    echo -e "\033[1;32m${@}\033[0m"
+}
 
-echo -n "Error.. "
-send_buffer "-ERR Unknown failure occurred\r\n"
-echo ".. ok"
+function err {
+    echo -e "\033[1;31m${@}\033[0m"
+}
 
-echo -n "Integer.. "
-send_buffer ":1337\r\n"
-echo ".. ok"
+echo -n "Sending PING.. "
+send_buffer "*1\r\n\$4\r\nPING\r\n" | grep "+PONG"
+
+if [ $? -eq 0 ]; then
+    ok ".. success"
+else
+    err "..failed"
+fi;
+
+
+#echo -n "Simple string.. "
+#send_buffer "+OK\r\n"
+#echo ".. ok"
+#
+#echo -n "Error.. "
+#send_buffer "-ERR Unknown failure occurred\r\n"
+#echo ".. ok"
+#
+#echo -n "Integer.. "
+#send_buffer ":1337\r\n"
+#echo ".. ok"
+#
+#echo -n "Bulk string.. "
+#send_buffer "\$5\r\nHELLO"
+#echo ".. ok"
