@@ -58,6 +58,45 @@ procedure Main is
       end if;
    end Handle_Integer;
 
+   procedure Handle_Bulk (Channel : in Stream_Access;
+                          Buffer : in Unbounded_String) is
+      use Ada.Streams;
+      use Ada.Characters.Latin_1;
+
+      Expected_Size : constant Stream_Element_Offset := Stream_Element_Offset'Value (To_String (Buffer));
+      -- We expect to also read the trailing \r\n here
+      Bulk_Buffer : Stream_Element_Array (1 .. (Expected_Size + 2));
+      Offset : Stream_Element_Count;
+      -- TODO:: Expected_Size will be 64 bits, on 32 bit platforms Integer may
+      -- not be 32 bits as well, and we might truncate here.
+      Bulk_String : String (1 .. Integer (Expected_Size));
+
+      IterInt : Integer;
+   begin
+      Put_Line (To_String (Buffer));
+      Read (Channel.all, Bulk_Buffer, Offset);
+      -- TODO: what to do when Offset != Expected_Size?
+      if Offset /= (Expected_Size  + 2) then
+         Put_Line ("Handle_Bulk: offset does not equal expected size");
+         Put_Line ("   offset:" & Stream_Element_Count'Image (Offset));
+         Put_Line (" expected:" & Stream_Element_Offset'Image (Expected_Size));
+      end if;
+
+      for Index in Bulk_Buffer (1 .. Expected_Size)'Range loop
+         IterInt := Integer (Index);
+         Bulk_String (IterInt) := Character'Val (Bulk_Buffer (Index));
+      end loop;
+      Put_Line ("Bulk read: " & Bulk_String);
+
+      if Bulk_String = "PING" then
+         String'Write (Channel, "+PONG" & CR & LF);
+      end if;
+
+   end Handle_Bulk;
+   -- Handle_Bulk will appropriate allocate and read the bulk string in from
+   -- the given Channel
+
+
    procedure Handle_Client_Commands (Sock : in Socket_Type) is
       use Ada.Streams;
       use Ada.Characters.Latin_1;
@@ -76,6 +115,7 @@ procedure Main is
       Command : Unbounded_String;
       Exiting : Boolean := False;
    begin
+      Put_Line ("Handle_Client_Commands");
       loop
          Read (Channel.all, Buffer, Offset);
          exit when Offset = 0;
@@ -93,6 +133,8 @@ procedure Main is
                when '*' => Current_Command := List;
                when others => null;
                end case;
+
+               Put_Line ("Current command is: " & Command_Type'Image (Current_Command));
             else
                -- We should be receiving the content itself
                if Byte = CR then
@@ -103,11 +145,14 @@ procedure Main is
                      when Simple_String => Handle_Simple_String (Command);
                      when Error => Handle_Error (Command);
                      when Int => Handle_Integer (Command);
+                     when Bulk =>
+                        Handle_Bulk (Channel, Command);
                      when others => null;
                   end case;
                   Current_Command := None;
                   Exiting := False;
                   Byte := NUL;
+                  Delete (Command, 1, Length (Command));
                else
                   Append (Command, Byte);
                end if;

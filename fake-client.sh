@@ -10,6 +10,8 @@ if [ $? -ne 0 ]; then
     exit 1;
 fi;
 
+set -xe
+
 function send_buffer {
     echo -e ${1} | nc -q 1 ${HOSTNAME} ${PORT}
 }
@@ -23,7 +25,7 @@ function err {
 }
 
 echo -n "Sending PING.. "
-send_buffer "*1\r\n\$4\r\nPING\r\n" | grep "+PONG"
+send_buffer '*1\r\n$4\r\nPING\r\n' | grep "+PONG"
 
 if [ $? -eq 0 ]; then
     ok ".. success"
