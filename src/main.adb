@@ -14,7 +14,7 @@ procedure Main is
    Server_Sock : Socket_Type;
    Server_Addr : Sock_Addr_Type;
 
-   type Command_Type is (None, Simple_String, Error, Int);
+   type Command_Type is (None, Simple_String, Error, Int, Bulk, List);
 
    procedure Prepare_Address (SA : in out Sock_Addr_Type) is
    begin
@@ -65,7 +65,9 @@ procedure Main is
       Channel : Stream_Access := Stream (Sock);
       -- The minimum buffer size in RESP is four bytes
       -- [type][buffer][crlf]
-      Buffer : Stream_Element_Array (1 .. 4);
+      Buffer  : Stream_Element_Array (1 .. 4);
+      -- TODO: need to investigate what happens here when the command payload
+      -- does not fall on a four byte boundary.
       Offset : Stream_Element_Count;
 
       Current_Command : Command_Type := None;
@@ -84,12 +86,11 @@ procedure Main is
             if Current_Command = None then
                -- We're at the start of a buffer
                case Byte is
-               when '+' =>
-                  Current_Command := Simple_String;
-               when '-' =>
-                  Current_Command := Error;
-               when ':' =>
-                  Current_Command := Int;
+               when '+' => Current_Command := Simple_String;
+               when '-' => Current_Command := Error;
+               when ':' => Current_Command := Int;
+               when '$' => Current_Command := Bulk;
+               when '*' => Current_Command := List;
                when others => null;
                end case;
             else
@@ -129,6 +130,8 @@ begin
 
    Bind_Socket (Server_Sock, Server_Addr);
    Listen_Socket (Server_Sock);
+
+   Put_Line ("mozzinid online and ready for work..");
 
    loop
       Handle_Client_Commands (
