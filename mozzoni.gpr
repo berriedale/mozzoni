@@ -9,7 +9,7 @@ project Mozzoni is
    end Builder;
 
    package Compiler is
-      for Switches ("ada") use ("-gnato", "-gnat12", "-gnatf", "-O3", "-fstack-check");
+      for Switches ("ada") use ("-gnato", "-gnat12", "-gnatf", "-fstack-check", "-g");
    end Compiler;
 
 end Mozzoni;

@@ -10,10 +10,14 @@ if [ $? -ne 0 ]; then
     exit 1;
 fi;
 
-set -xe
-
 function send_buffer {
-    echo -e ${1} | nc -q 1 ${HOSTNAME} ${PORT}
+    echo -e ${1} | nc -N ${HOSTNAME} ${PORT} | grep ${2}
+
+    if [ $? -eq 0 ]; then
+        ok ".. success"
+    else
+        err "..failed"
+    fi;
 }
 
 function ok {
@@ -25,13 +29,10 @@ function err {
 }
 
 echo -n "Sending PING.. "
-send_buffer '*1\r\n$4\r\nPING\r\n' | grep "+PONG"
+send_buffer '*1\r\n$4\r\nPING\r\n' "+PONG"
 
-if [ $? -eq 0 ]; then
-    ok ".. success"
-else
-    err "..failed"
-fi;
+echo -n "Sending SET.. "
+send_buffer '*3\r\n$3\r\nSET\r\n$8\r\ncachekey\r\n$4\r\nfake\r\n' "+OK"
 
 
 #echo -n "Simple string.. "
