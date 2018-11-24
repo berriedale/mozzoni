@@ -10,27 +10,15 @@ package Mozzoni is
 
    type RESP_Type is (None, Simple_String, Error, Int, Bulk, List);
 
-
-   type RESP_Item (Kind : RESP_Type) is record
-      Valid     : Boolean := False;
-      Item_Type : RESP_Type := Kind;
-      case Kind is
-      when Simple_String =>
-         Value  : Unbounded_String;
-      when Int =>
-         Number : Integer;
-      when Bulk =>
-         Buffer : Unbounded_String;
-      when others => null;
-      end case;
+   type Command_Item is record
+      Item_Type : RESP_Type;
+      Value     : Unbounded_String;
    end record;
-   type RESP_Item_Access is access all RESP_Item;
-   type RESP_Item_Array is array (Positive range <>) of RESP_Item_Access;
+   type Command_Array is array (Positive range <>) of Command_Item;
+   type Command_Array_Access is access all Command_Array;
 
-   type Command_Type (Max_Params : Natural) is record
-      Name  : String (1 .. Command_Name_Max);
-      Items : RESP_Item_Array (1 .. Max_Params);
-   end record;
-   type Command_Type_Access is access all Command_Type;
+   -- Output the specified command to standard output
+   procedure Print (Command : in Command_Array_Access)
+     with Pre => Command /= null;
 
 end Mozzoni;
