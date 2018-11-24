@@ -9,8 +9,10 @@ with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Text_IO; use Ada.Text_IO;
 with GNAT.Sockets; use GNAT.Sockets;
 
+with Mozzoni.Command_Loader;
 with Mozzoni; use Mozzoni;
 with Mozzoni.Parser; use Mozzoni.Parser;
+with Mozzoni.Dispatch; use Mozzoni.Dispatch;
 
 procedure Main is
    Server_Sock : Socket_Type;
@@ -75,6 +77,8 @@ procedure Main is
                when ':' => Current_RESP := Int;
                when '$' => Current_RESP := Bulk;
                when '*' => Current_RESP := List;
+                  -- when others we're likely seeing a "simple" command, in which case
+                  -- we need to parse it differently
                when others => null;
                end case;
             else
@@ -87,6 +91,7 @@ procedure Main is
                      when List =>
                         Parsed_Command := Read_Command_List (Channel, To_Natural (Command));
                         Print (Parsed_Command);
+                        Dispatch_Command (Channel, Parsed_Command);
                      when others => null;
                   end case;
                   Current_RESP := None;
@@ -106,6 +111,9 @@ procedure Main is
    end Read_Client_Commands;
 
 begin
+
+   Mozzoni.Command_Loader.Load;
+
    -- Initialize GNAT.Sockets
    Initialize;
    Prepare_Address (Server_Addr);

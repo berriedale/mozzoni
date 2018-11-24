@@ -5,7 +5,6 @@ package Mozzoni is
 
    Port             : constant Natural := 6379;
    Default_Bind     : constant String := "127.0.0.1";
-   Command_Name_Max : constant := 16;
 
 
    type RESP_Type is (None, Simple_String, Error, Int, Bulk, List);
