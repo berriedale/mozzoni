@@ -11,12 +11,14 @@ if [ $? -ne 0 ]; then
 fi;
 
 function send_buffer {
-    echo -e ${1} | nc -N ${HOSTNAME} ${PORT} | grep ${2}
+    output=$( echo -e ${1} | nc -v -w 5 -N ${HOSTNAME} ${PORT} 2>&1 )
+    echo ${output} | grep ${2} 2>&1 > /dev/null
 
     if [ $? -eq 0 ]; then
         ok ".. success"
     else
         err "..failed"
+        echo -e ${output}
     fi;
 }
 
