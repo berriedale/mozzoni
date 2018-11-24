@@ -39,9 +39,14 @@ package Mozzoni.Parser is
    function Read_Item (Channel : in Stream_Access) return Command_Item
      with Pre => Channel /= null;
 
+   -- Read_Command_List will process an the contents of a command sent in "list"
+   -- form. This is the most common case for most clients, and thus this function
+   -- is fairly crucial to the operation of Mozzoni
    function Read_Command_List (Channel : Stream_Access;
                                Item_Count : in Natural) return Command_Array_Access
      with Pre => Channel /= null and Item_Count > 0;
 
+
+   function Parse_Human_Readable_Command (Buffer : Unbounded_String) return Command_Array_Access;
 
 end Mozzoni.Parser;

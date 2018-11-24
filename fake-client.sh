@@ -31,7 +31,11 @@ function err {
 }
 
 echo -n "Sending PING.. "
-send_buffer '*1\r\n$4\r\nPING\r\n' "+PONG"
+send_buffer '*1\r\n$4\r\nPING\r\n' '+PONG'
+echo -n "Sending PING (human readable).. "
+send_buffer 'PING\r\n' "+PONG"
+echo
+
 
 echo -n "Sending SET.. "
 send_buffer '*3\r\n$3\r\nSET\r\n$8\r\ncachekey\r\n$4\r\nfake\r\n' "+OK"

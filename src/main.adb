@@ -79,7 +79,9 @@ procedure Main is
                when '*' => Current_RESP := List;
                   -- when others we're likely seeing a "simple" command, in which case
                   -- we need to parse it differently
-               when others => null;
+               when others =>
+                  Current_RESP := Human_Readable;
+                  Append (Command, Byte);
                end case;
             else
                -- We should be receiving the content itself
@@ -90,8 +92,10 @@ procedure Main is
                   case Current_RESP is
                      when List =>
                         Parsed_Command := Read_Command_List (Channel, To_Natural (Command));
-                        Print (Parsed_Command);
+                        -- Print (Parsed_Command);
                         Dispatch_Command (Channel, Parsed_Command);
+                     when Human_Readable =>
+                        Dispatch_Command (Channel, Parse_Human_Readable_Command (Command));
                      when others => null;
                   end case;
                   Current_RESP := None;

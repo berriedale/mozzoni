@@ -103,6 +103,7 @@ package body Mozzoni.Parser is
       return Item;
    end Read_Item;
 
+
    function Read_Command_List (Channel      : in Stream_Access;
                                Item_Count   : in Natural) return Command_Array_Access is
       Pieces : Command_Array_Access := new Command_Array (1 .. Item_Count);
@@ -112,4 +113,14 @@ package body Mozzoni.Parser is
       end loop;
       return Pieces;
    end Read_Command_List;
+
+
+   function Parse_Human_Readable_Command (Buffer : Unbounded_String) return Command_Array_Access is
+      -- TODO: Determine this in a better way
+      Pieces : Command_Array_Access := new Command_Array (1 .. 16);
+   begin
+      Pieces (1).Value := Buffer;
+      return Pieces;
+   end Parse_Human_Readable_Command;
+
 end Mozzoni.Parser;

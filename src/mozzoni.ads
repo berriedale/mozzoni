@@ -7,7 +7,7 @@ package Mozzoni is
    Default_Bind     : constant String := "127.0.0.1";
 
 
-   type RESP_Type is (None, Simple_String, Error, Int, Bulk, List);
+   type RESP_Type is (None, Human_Readable, Simple_String, Error, Int, Bulk, List);
 
    type Command_Item is record
       Item_Type : RESP_Type;
