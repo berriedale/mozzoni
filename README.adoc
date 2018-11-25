@@ -14,11 +14,12 @@ an italian feminist and arguably the founder of the women's movement in Italy.
 
 === `PING`
 
-**Mozzoni**:
+`./redis-benchmark -t ping -e`
 
-[source]
+==== Mozzoni
+
+[source, txt]
 ----
-./redis-benchmark -t ping -e
 ====== PING_INLINE ======
   100000 requests completed in 2.55 seconds
   50 parallel clients
@@ -44,10 +45,10 @@ an italian feminist and arguably the founder of the women's movement in Italy.
 45475.22 requests per second
 ----
 
-**Redis**:
-[source]
+==== Redis
+
+[source, txt]
 ----
-./redis-benchmark -t ping -e
 ====== PING_INLINE ======
   100000 requests completed in 0.73 seconds
   50 parallel clients
