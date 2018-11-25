@@ -1,0 +1,157 @@
+<tests_mapping mode="monolith">
+   <unit source_file="mozzoni-command_loader.ads">
+      <test_unit target_file="mozzoni-command_loader-test_data-tests.ads">
+         <setup file="mozzoni-command_loader-test_data.adb" name="Set_Up" line="8"  column="4"/>
+         <teardown file="mozzoni-command_loader-test_data.adb" name="Tear_Down" line="14"  column="4"/>
+         <tested name="Load" line="6" column="14">
+            <test file="mozzoni-command_loader-test_data-tests.adb" line="43" column="1" name="Test_Load_576ff0" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <dangling>
+         </dangling>
+      </test_unit>
+   </unit>
+   <unit source_file="mozzoni-commands-keys.ads">
+      <test_unit target_file="mozzoni-commands-keys-test_data-tests.ads">
+         <setup file="mozzoni-commands-keys-test_data.adb" name="Set_Up" line="8"  column="4"/>
+         <teardown file="mozzoni-commands-keys-test_data.adb" name="Tear_Down" line="14"  column="4"/>
+         <tested name="Handle_Set" line="8" column="14">
+            <test file="mozzoni-commands-keys-test_data-tests.adb" line="41" column="1" name="Test_Handle_Set_2998b1" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <tested name="Handle_Get" line="12" column="14">
+            <test file="mozzoni-commands-keys-test_data-tests.adb" line="64" column="1" name="Test_Handle_Get_c67e84" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <dangling>
+         </dangling>
+      </test_unit>
+      <stub_unit Original_body_file="../../src/mozzoni-commands-keys.adb" stub_body_file="../../obj/gnattest_stub/stubs/Mozzoni/mozzoni-commands-keys.adb" setter_file="mozzoni-commands-keys-stub_data.adb">
+         <stubbed name="Mozzoni.Commands.Keys" line="6" column="1">
+            <stub_body line="22" column="0"/>
+         </stubbed>
+         <stubbed name="Handle_Set" line="8" column="4">
+            <stub_body line="34" column="3"/>
+            <setter line="15" column="4"/>
+         </stubbed>
+         <stubbed name="Handle_Get" line="12" column="4">
+            <stub_body line="52" column="3"/>
+            <setter line="27" column="4"/>
+         </stubbed>
+         <dangling_stubs>
+         </dangling_stubs>
+         <dangling_setters>
+         </dangling_setters>
+      </stub_unit>
+   </unit>
+   <unit source_file="mozzoni-commands.ads">
+      <test_unit target_file="mozzoni-commands-test_data-tests.ads">
+         <setup file="mozzoni-commands-test_data.adb" name="Set_Up" line="8"  column="4"/>
+         <teardown file="mozzoni-commands-test_data.adb" name="Tear_Down" line="14"  column="4"/>
+         <tested name="Prepare_Response" line="10" column="13">
+            <test file="mozzoni-commands-test_data-tests.adb" line="40" column="1" name="Test_Prepare_Response_81ad58" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <tested name="Handle_Ping" line="14" column="14">
+            <test file="mozzoni-commands-test_data-tests.adb" line="61" column="1" name="Test_Handle_Ping_673a53" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <dangling>
+         </dangling>
+      </test_unit>
+      <stub_unit Original_body_file="../../src/mozzoni-commands.adb" stub_body_file="../../obj/gnattest_stub/stubs/Mozzoni/mozzoni-commands.adb" setter_file="mozzoni-commands-stub_data.adb">
+         <stubbed name="Mozzoni.Commands" line="8" column="1">
+            <stub_body line="22" column="0"/>
+         </stubbed>
+         <stubbed name="Prepare_Response" line="10" column="4">
+            <stub_body line="34" column="3"/>
+            <setter line="15" column="4"/>
+         </stubbed>
+         <stubbed name="Handle_Ping" line="14" column="4">
+            <stub_body line="51" column="3"/>
+            <setter line="28" column="4"/>
+         </stubbed>
+         <dangling_stubs>
+         </dangling_stubs>
+         <dangling_setters>
+         </dangling_setters>
+      </stub_unit>
+   </unit>
+   <unit source_file="mozzoni-dispatch.ads">
+      <test_unit target_file="mozzoni-dispatch-test_data-tests.ads">
+         <setup file="mozzoni-dispatch-test_data.adb" name="Set_Up" line="8"  column="4"/>
+         <teardown file="mozzoni-dispatch-test_data.adb" name="Tear_Down" line="14"  column="4"/>
+         <tested name="Dispatch_Command" line="13" column="14">
+            <test file="mozzoni-dispatch-test_data-tests.adb" line="41" column="1" name="Test_Dispatch_Command_d94ce7" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <tested name="Register_Command" line="17" column="14">
+            <test file="mozzoni-dispatch-test_data-tests.adb" line="62" column="1" name="Test_Register_Command_da40d5" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <dangling>
+         </dangling>
+      </test_unit>
+      <stub_unit Original_body_file="../../src/mozzoni-dispatch.adb" stub_body_file="../../obj/gnattest_stub/stubs/Mozzoni/mozzoni-dispatch.adb" setter_file="mozzoni-dispatch-stub_data.adb">
+         <stubbed name="Mozzoni.Dispatch" line="6" column="1">
+            <stub_body line="22" column="0"/>
+         </stubbed>
+         <stubbed name="Dispatch_Command" line="13" column="4">
+            <stub_body line="34" column="3"/>
+            <setter line="15" column="4"/>
+         </stubbed>
+         <stubbed name="Register_Command" line="17" column="4">
+            <stub_body line="52" column="3"/>
+            <setter line="27" column="4"/>
+         </stubbed>
+         <dangling_stubs>
+         </dangling_stubs>
+         <dangling_setters>
+         </dangling_setters>
+      </stub_unit>
+   </unit>
+   <unit source_file="mozzoni-parser.ads">
+      <test_unit target_file="mozzoni-parser-test_data-tests.ads">
+         <setup file="mozzoni-parser-test_data.adb" name="Set_Up" line="8"  column="4"/>
+         <teardown file="mozzoni-parser-test_data.adb" name="Tear_Down" line="14"  column="4"/>
+         <tested name="Convert_Byte" line="18" column="13">
+            <test file="mozzoni-parser-test_data-tests.adb" line="40" column="1" name="Test_Convert_Byte_a0e4d9" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <tested name="Read_To_CRLF" line="25" column="13">
+            <test file="mozzoni-parser-test_data-tests.adb" line="61" column="1" name="Test_Read_To_CRLF_36d02c" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <tested name="Read_Bulk" line="31" column="13">
+            <test file="mozzoni-parser-test_data-tests.adb" line="84" column="1" name="Test_Read_Bulk_8bfaf7" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <tested name="Read_Item" line="39" column="13">
+            <test file="mozzoni-parser-test_data-tests.adb" line="107" column="1" name="Test_Read_Item_e4127d" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <tested name="Read_Command_List" line="45" column="13">
+            <test file="mozzoni-parser-test_data-tests.adb" line="131" column="1" name="Test_Read_Command_List_bb6902" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <tested name="Parse_Human_Readable_Command" line="50" column="13">
+            <test file="mozzoni-parser-test_data-tests.adb" line="154" column="1" name="Test_Parse_Human_Readable_Command_364d20" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <dangling>
+         </dangling>
+      </test_unit>
+   </unit>
+   <unit source_file="mozzoni.ads">
+      <test_unit target_file="mozzoni-test_data-tests.ads">
+         <setup file="mozzoni-test_data.adb" name="Set_Up" line="8"  column="4"/>
+         <teardown file="mozzoni-test_data.adb" name="Tear_Down" line="14"  column="4"/>
+         <tested name="Print" line="20" column="14">
+            <test file="mozzoni-test_data-tests.adb" line="39" column="1" name="Test_Print_76b074" timestamp="2018-11-25 21:50:38"/>
+         </tested>
+         <dangling>
+         </dangling>
+      </test_unit>
+      <stub_unit Original_body_file="../../src/mozzoni.adb" stub_body_file="../../obj/gnattest_stub/stubs/Mozzoni/mozzoni.adb" setter_file="mozzoni-stub_data.adb">
+         <stubbed name="Mozzoni" line="4" column="1">
+            <stub_body line="22" column="0"/>
+         </stubbed>
+         <stubbed name="Print" line="20" column="4">
+            <stub_body line="34" column="3"/>
+            <setter line="15" column="4"/>
+         </stubbed>
+         <dangling_stubs>
+         </dangling_stubs>
+         <dangling_setters>
+         </dangling_setters>
+      </stub_unit>
+   </unit>
+   <additional_tests/>
+</tests_mapping>

@@ -1,0 +1,21 @@
+with "gnattest_common.gpr";
+
+aggregate project Test_Drivers is
+   for Project_Files use
+     ("Mozzoni.Command_Loader.Test_Data.Tests/test_driver.gpr",
+      "Mozzoni.Commands.Keys.Test_Data.Tests/test_driver.gpr",
+      "Mozzoni.Commands.Test_Data.Tests/test_driver.gpr",
+      "Mozzoni.Dispatch.Test_Data.Tests/test_driver.gpr",
+      "Mozzoni.Parser.Test_Data.Tests/test_driver.gpr",
+      "Mozzoni.Test_Data.Tests/test_driver.gpr");
+
+   for Origin_Project use "../../mozzoni.gpr";
+
+   for Target use Gnattest_Common'Target;
+   for Runtime ("Ada") use Gnattest_Common'Runtime ("Ada");
+
+   package GNATtest is
+   for GNATTest_Mapping_File use "gnattest.xml";
+   end GNATtest;
+
+end Test_Drivers;

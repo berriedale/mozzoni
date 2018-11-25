@@ -1,0 +1,24 @@
+with "..//gnattest_common.gpr";
+
+project Stubs extends "../../../mozzoni.gpr" is
+   for Target use Gnattest_Common'Target;
+
+   for Runtime ("Ada") use Gnattest_Common'Runtime ("Ada");
+
+   package Ide renames Gnattest_Common.Ide;
+
+   package Make renames Gnattest_Common.Make;
+
+   for Languages use Gnattest_Common'Languages & ("Ada");
+   for Library_Dir use "Stubs_lib";
+   for Object_Dir use "Stubs_obj";
+
+   for Source_Dirs use ("/home/tyler/source/github/berriedale/mozzoni/obj/gnattest_stub/stubs/Mozzoni");
+
+   for Source_Files use
+     ("mozzoni.adb",
+      "mozzoni-stub_data.ads",
+      "mozzoni-stub_data.adb");
+   package Compiler renames Gnattest_Common.Compiler;
+
+end Stubs;
