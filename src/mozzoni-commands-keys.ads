@@ -5,9 +5,12 @@ with GNAT.Sockets; use GNAT.Sockets;
 
 package Mozzoni.Commands.Keys is
 
-      procedure Handle_Set  (Channel : in Stream_Access;
-                             Command : Command_Array_Access)
-        with Pre => Channel /= null and Command /= null;
+   procedure Handle_Set  (Channel : in Stream_Access;
+                          Command : Command_Array_Access)
+     with Pre => Channel /= null and Command /= null;
 
+   procedure Handle_Get (Channel : in Stream_Access;
+                         Command : Command_Array_Access)
+     with Pre => Channel /= null and Command /= null;
 
 end Mozzoni.Commands.Keys;

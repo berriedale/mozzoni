@@ -11,6 +11,7 @@ package body Mozzoni.Command_Loader is
 
       -- Register the key related commands (e.g. SET, GET, etc)
       Register_Command ("SET", Mozzoni.Commands.Keys.Handle_Set'Access);
+      Register_Command ("GET", Mozzoni.Commands.Keys.Handle_Get'Access);
    end Load;
 
 end Mozzoni.Command_Loader;
