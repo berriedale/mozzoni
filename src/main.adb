@@ -41,6 +41,7 @@ procedure Main is
       Client_Sock : Socket_Type;
    begin
       Accept_Socket (Sock, Client_Sock, SA);
+      Put_Line ("Accepted socket connection");
       return Client_Sock;
    end Wait_For_Connection;
 
@@ -60,6 +61,7 @@ procedure Main is
       Parsed_Command : Command_Array_Access;
       Exiting : Boolean := False;
    begin
+      Put_Line ("Handle_Client_Commands");
       loop
          Read (Channel.all, Buffer, Offset);
          exit when Offset = 0;
@@ -107,30 +109,11 @@ procedure Main is
          end loop;
       end loop;
 
+      Put_Line ("Closing connection");
       -- XXX: Temporary close socket immediately
       Close_Socket (Sock);
    end Read_Client_Commands;
 
-
-   task type Client_Handler_Task is
-      entry Read_Commands (S : in Socket_Type);
-   end Client_Handler_Task;
-
-   task body Client_Handler_Task is
-
-   begin
-      loop
-         accept Read_Commands (S : in Socket_Type) do
-            Read_Client_Commands (S);
-         end Read_Commands;
-      end loop;
-   end Client_Handler_Task;
-   type Client_Handler_Task_Access is access all Client_Handler_Task;
-   type Client_Handler_Task_Array is array (Positive range <>) of Client_Handler_Task_Access;
-
-   Workers : Client_Handler_Task_Array (1 .. 50) := (others => new Client_Handler_Task);
-   Current_Worker : Natural := 1;
-   Client_Socket : Socket_Type;
 begin
 
    Mozzoni.Command_Loader.Load;
@@ -149,13 +132,7 @@ begin
 
    loop
       begin
-         if Current_Worker > Workers'Length then
-            Current_Worker := 1;
-         end if;
-
-         Client_Socket := Wait_For_Connection (Server_Sock, Server_Addr);
-         Workers (Current_Worker).Read_Commands (Client_Socket);
-         Current_Worker := Current_Worker + 1;
+         Read_Client_Commands (Wait_For_Connection (Server_Sock, Server_Addr));
       exception
          when Event : others =>
             Put_Line ("Failure handling connection!");
