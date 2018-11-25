@@ -2,3 +2,69 @@
 
 Mozzoni aims to be a fast and safe NoSQL data service.
 
+
+== About
+
+Mozzoni is named after 
+link:https://en.wikipedia.org/wiki/Anna_Maria_Mozzoni[Anna Maria Mozzoni]
+an italian feminist and arguably the founder of the women's movement in Italy.
+
+
+== Benchmarking
+
+=== `PING`
+
+**Mozzoni**:
+
+[source]
+----
+./redis-benchmark -t ping -e
+====== PING_INLINE ======
+  100000 requests completed in 2.55 seconds
+  50 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+99.98% <= 1 milliseconds
+99.98% <= 3 milliseconds
+99.98% <= 5 milliseconds
+99.99% <= 2547 milliseconds
+100.00% <= 2547 milliseconds
+39231.07 requests per second
+
+====== PING_BULK ======
+  100000 requests completed in 2.20 seconds
+  50 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+99.98% <= 1 milliseconds
+99.99% <= 2199 milliseconds
+100.00% <= 2199 milliseconds
+45475.22 requests per second
+----
+
+**Redis**:
+[source]
+----
+./redis-benchmark -t ping -e
+====== PING_INLINE ======
+  100000 requests completed in 0.73 seconds
+  50 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+99.80% <= 1 milliseconds
+100.00% <= 1 milliseconds
+136798.91 requests per second
+
+====== PING_BULK ======
+  100000 requests completed in 0.70 seconds
+  50 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+99.95% <= 1 milliseconds
+100.00% <= 1 milliseconds
+143472.02 requests per second
+----
