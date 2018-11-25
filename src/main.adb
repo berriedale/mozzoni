@@ -61,7 +61,6 @@ procedure Main is
       Parsed_Command : Command_Array_Access;
       Exiting : Boolean := False;
    begin
-      Put_Line ("Handle_Client_Commands");
       loop
          Read (Channel.all, Buffer, Offset);
          exit when Offset = 0;
