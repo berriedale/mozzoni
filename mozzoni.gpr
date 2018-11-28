@@ -12,5 +12,7 @@ project Mozzoni is
       for Switches ("ada") use ("-gnato", "-gnat12", "-gnatf", "-fstack-check", "-g");
    end Compiler;
 
+   for Languages use ("Ada", "C");
+
 end Mozzoni;
 
