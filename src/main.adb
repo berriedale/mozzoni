@@ -1,4 +1,4 @@
----
+--
 -- Mozzoni is a safe, multi-core capable NoSQL data service
 
 
@@ -14,9 +14,17 @@ with Mozzoni; use Mozzoni;
 with Mozzoni.Parser; use Mozzoni.Parser;
 with Mozzoni.Dispatch; use Mozzoni.Dispatch;
 
+with Interfaces.C;
+with Epoll;
+
 procedure Main is
    Server_Sock : Socket_Type;
    Server_Addr : Sock_Addr_Type;
+
+   EpollFD     : Epoll.Epoll_Fd_Type;
+   Event       : aliased Epoll.Event_Type;
+   Events      : Epoll.Event_Array_Type (1 .. 10);
+   Return_Value, Descriptors : Integer;
 
    function To_Natural (Buffer : in Unbounded_String) return Natural is
    begin
@@ -113,6 +121,12 @@ procedure Main is
       Close_Socket (Sock);
    end Read_Client_Commands;
 
+
+   Buffer : aliased String (1 .. 32);
+   Client_Socket : Socket_Type;
+   Socket_Request : Request_Type := (Non_Blocking_IO, True);
+   Bytes_Read : Integer := 0;
+
 begin
 
    Mozzoni.Command_Loader.Load;
@@ -126,17 +140,59 @@ begin
 
    Bind_Socket (Server_Sock, Server_Addr);
    Listen_Socket (Server_Sock);
+   EpollFD := Epoll.Create (Events'Last + 1);
+
+   if EpollFD = -1 then
+      Put_Line ("Failed to create epoll(7) file descriptor");
+      return;
+   end if;
+
+   Event.Events := Epoll.Epoll_In;
+   Event.Data.FD := Server_Sock;
+
+   Return_Value := Epoll.Control (EpollFD, Epoll.Epoll_Ctl_Add, To_C (Server_Sock), Event'Access);
+
 
    Put_Line ("mozzinid online and ready for work..");
 
    loop
-      begin
-         Read_Client_Commands (Wait_For_Connection (Server_Sock, Server_Addr));
-      exception
-         when Event : others =>
-            Put_Line ("Failure handling connection!");
-            Put_Line (Ada.Exceptions.Exception_Message (Event));
-      end;
+      Descriptors := 0;
+      Descriptors := Epoll.Wait (EpollFD, Events (Events'First)'Access, 10, -1);
+
+      for Index in 1 .. Descriptors loop
+         declare
+            Polled_Event : Epoll.Event_Type := Events (Integer (Index));
+         begin
+            if Polled_Event.Data.FD = Server_Sock then
+               -- Accept the new connection
+               Accept_Socket (Server_Sock, Client_Socket, Server_Addr);
+               Control_Socket (Client_Socket, Socket_Request);
+
+               Event.Events := Epoll.Epoll_In_And_Et;
+               Event.Data.FD := Client_Socket;
+
+               Return_Value := Epoll.Control (EpollFD,
+                                              Epoll.Epoll_Ctl_Add,
+                                              To_C (Client_Socket),
+                                              Event'Access);
+               Put_Line ("accepted...");
+            else
+               -- Read the data on the socket
+               Bytes_Read := Integer (Read_Socket (Polled_Event.Data.FD,
+                                      Buffer'Address,
+                                      Buffer'Length));
+               exit when Bytes_Read = 0;
+               Put_Line ("read" & Integer'Image (Bytes_Read) & " bytes");
+               Put_Line ("errno set to:" & Integer'Image (Error_Number));
+
+               if Error_Number = 0 then
+                  Put (Buffer (1 .. Bytes_Read));
+               else
+                  Put_Line ("done?");
+               end if;
+            end if;
+         end;
+      end loop;
    end loop;
 
 end Main;

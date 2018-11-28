@@ -1,4 +1,7 @@
 
+with GNAT.Sockets;
+with Interfaces.C;
+with System;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 package Mozzoni is
@@ -19,5 +22,19 @@ package Mozzoni is
    -- Output the specified command to standard output
    procedure Print (Command : in Command_Array_Access)
      with Pre => Command /= null;
+
+
+   function Read_Socket (S : in GNAT.Sockets.Socket_Type;
+                         Buffer : in System.Address;
+                         Count  : Interfaces.C.size_t) return Interfaces.C.size_t
+     with Import,
+       Link_Name => "read",
+     Convention => C;
+
+   function Error_Number return Integer
+     with Import,
+     Link_Name => "fetch_errno",
+     Convention => C;
+
 
 end Mozzoni;

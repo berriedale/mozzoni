@@ -7,7 +7,6 @@ with Mozzoni; use Mozzoni;
 
 package body Mozzoni.Parser is
 
-
    function To_Natural (Buffer : in Unbounded_String) return Natural is
    begin
       return Natural'Value (To_String (Buffer));
