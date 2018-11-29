@@ -17,6 +17,8 @@ with Mozzoni.Dispatch; use Mozzoni.Dispatch;
 with Interfaces.C;
 with Epoll;
 
+with Mozzoni.Client;
+
 procedure Main is
    Server_Sock : Socket_Type;
    Server_Addr : Sock_Addr_Type;
@@ -121,11 +123,8 @@ procedure Main is
       Close_Socket (Sock);
    end Read_Client_Commands;
 
-
-   Buffer : aliased String (1 .. 32);
    Client_Socket : Socket_Type;
    Socket_Request : Request_Type := (Non_Blocking_IO, True);
-   Bytes_Read : Integer := 0;
 
 begin
 
@@ -162,6 +161,7 @@ begin
       for Index in 1 .. Descriptors loop
          declare
             Polled_Event : Epoll.Event_Type := Events (Integer (Index));
+            Client : Mozzoni.Client.Client_Type;
          begin
             if Polled_Event.Data.FD = Server_Sock then
                -- Accept the new connection
@@ -175,21 +175,12 @@ begin
                                               Epoll.Epoll_Ctl_Add,
                                               To_C (Client_Socket),
                                               Event'Access);
+
+               Mozzoni.Client.Register_Client (Client_Socket);
                Put_Line ("accepted...");
             else
-               -- Read the data on the socket
-               Bytes_Read := Integer (Read_Socket (Polled_Event.Data.FD,
-                                      Buffer'Address,
-                                      Buffer'Length));
-               exit when Bytes_Read = 0;
-               Put_Line ("read" & Integer'Image (Bytes_Read) & " bytes");
-               Put_Line ("errno set to:" & Integer'Image (Error_Number));
-
-               if Error_Number = 0 then
-                  Put (Buffer (1 .. Bytes_Read));
-               else
-                  Put_Line ("done?");
-               end if;
+               Client := Mozzoni.Client.Client_For (Polled_Event.Data.FD);
+               Client.Read_Available (Polled_Event.Data.FD);
             end if;
          end;
       end loop;
