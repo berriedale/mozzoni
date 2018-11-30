@@ -21,7 +21,7 @@ package body Mozzoni.Commands.Keys is
    --    - SET
    --    - <cachekey>
    --    - <value>
-   procedure Handle_Set  (Channel : in Stream_Access;
+   procedure Handle_Set  (Client : in out Client_Type;
                           Command : Command_Array_Access) is
       Key_Item : Command_Item := Command (2);
       Value_Item : Command_Item := Command (3);
@@ -32,18 +32,20 @@ package body Mozzoni.Commands.Keys is
          Hashed_Maps.Insert (Keys, Key_Item.Value, Value_Item.Value);
       end if;
 
-      String'Write (Channel, Prepare_Response ("+OK"));
+
+      Client.Write (Prepare_Response ("+OK"));
    end Handle_Set;
 
 
-   procedure Handle_Get (Channel : in Stream_Access;
+   procedure Handle_Get (Client : in out Client_Type;
                          Command : Command_Array_Access) is
       Key_Item : Command_Item := Command (2);
       Cached_Value : Unbounded_String := Hashed_Maps.Element (Keys, Key_Item.Value);
    begin
-      Character'Write (Channel, '$');
-      Natural'Write (Channel, Length (Cached_Value));
-      String'Write (Channel, Prepare_Response (To_String (Cached_Value)));
+--        Character'Write (Channel, '$');
+--        Natural'Write (Channel, Length (Cached_Value));
+--        String'Write (Channel, Prepare_Response (To_String (Cached_Value)));
+      null;
    end Handle_Get;
 
 end Mozzoni.Commands.Keys;

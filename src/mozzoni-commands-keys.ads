@@ -1,16 +1,16 @@
 
 
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with GNAT.Sockets; use GNAT.Sockets;
+with Mozzoni.Client; use Mozzoni.Client;
 
 package Mozzoni.Commands.Keys is
 
-   procedure Handle_Set  (Channel : in Stream_Access;
+   procedure Handle_Set  (Client : in out Client_Type;
                           Command : Command_Array_Access)
-     with Pre => Channel /= null and Command /= null;
+     with Pre => Client.Is_Valid and Command /= null;
 
-   procedure Handle_Get (Channel : in Stream_Access;
+   procedure Handle_Get (Client : in out Client_Type;
                          Command : Command_Array_Access)
-     with Pre => Channel /= null and Command /= null;
+     with Pre => Client.Is_Valid and Command /= null;
 
 end Mozzoni.Commands.Keys;

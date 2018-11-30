@@ -22,7 +22,7 @@ package body Mozzoni.Dispatch is
    end Register_Command;
 
 
-   procedure Dispatch_Command (Channel : in Stream_Access;
+   procedure Dispatch_Command (Client : in out Client_Type;
                                Command_Access : in Command_Array_Access) is
       Command : constant Command_Array := Command_Access.all;
       Command_Name : constant Unbounded_String := Command (1).Value;
@@ -32,7 +32,7 @@ package body Mozzoni.Dispatch is
          declare
             Handler : constant Dispatchable_Type := Dispatches.Element (Available, Command_Name);
          begin
-            Handler (Channel, Command_Access);
+            Handler (Client, Command_Access);
          end;
       end if;
 

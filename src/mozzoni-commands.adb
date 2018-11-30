@@ -10,10 +10,10 @@ package body Mozzoni.Commands is
    end Prepare_Response;
 
 
-   procedure Handle_Ping (Channel : in Stream_Access;
+   procedure Handle_Ping (Client : in out Client_Type;
                           Command : Command_Array_Access) is
    begin
-      String'Write (Channel, Prepare_Response ("+PONG"));
+      Client.Write (Prepare_Response ("+PONG"));
    end Handle_Ping;
 
 end Mozzoni.Commands;

@@ -10,12 +10,14 @@ package Epoll is
     type Epoll_Events_Type is (Epoll_In,
                                Epoll_Pri,
                                Epoll_Out,
+                               Epoll_In_And_Out,
                                Epoll_Et,
                                Epoll_In_And_Et
                               );
     for Epoll_Events_Type use (Epoll_In => 1,
                                 Epoll_Pri => 2,
-                                Epoll_Out => 4,
+                               Epoll_Out => 4,
+                               Epoll_In_And_Out => 5,
                                 Epoll_Et  => 2147483648,
                                 Epoll_In_And_Et => 2147483649);
     for Epoll_Events_Type'Size use Interfaces.C.int'Size;

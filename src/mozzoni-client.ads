@@ -13,10 +13,15 @@ package Mozzoni.Client is
       ID         : Unbounded_String;
       Socket     : Socket_Type;
       Buffer     : Unbounded_String;
+      Command_Buffer : Unbounded_String;
+      Current_RESP_Type : RESP_Type := Mozzoni.None;
       -- IP Address
       -- Client_Port_Number
    end record;
-   procedure Read_Available (Client : Client_Type; Socket : in Socket_Type);
+   procedure Read_Available (Client : in out Client_Type; Socket : in Socket_Type);
+   procedure Write (Client : in out Client_Type;
+                    Buffer : in String);
+   function Is_Valid (Client : in Client_Type) return Boolean;
 
 
    procedure Register_Client (Socket : in Socket_Type);
@@ -32,5 +37,22 @@ package Mozzoni.Client is
                                                    Equivalent_Keys => "=");
 
    Directory : Maps.Map;
+
+
+
+
+   function Read_Socket (S      : in GNAT.Sockets.Socket_Type;
+                         Buffer : in System.Address;
+                         Count  : Interfaces.C.size_t) return Interfaces.C.size_t
+     with Import,
+     Link_Name => "read",
+     Convention => C;
+
+   function Write_Socket (S      : in Socket_Type;
+                          Buffer : in System.Address;
+                          Count  : Interfaces.C.size_t) return Interfaces.C.size_t
+     with Import,
+     Link_Name => "write",
+     Convention => C;
 
 end Mozzoni.Client;

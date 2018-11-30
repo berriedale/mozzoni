@@ -24,13 +24,6 @@ package Mozzoni is
      with Pre => Command /= null;
 
 
-   function Read_Socket (S : in GNAT.Sockets.Socket_Type;
-                         Buffer : in System.Address;
-                         Count  : Interfaces.C.size_t) return Interfaces.C.size_t
-     with Import,
-       Link_Name => "read",
-     Convention => C;
-
    function Error_Number return Integer
      with Import,
      Link_Name => "fetch_errno",

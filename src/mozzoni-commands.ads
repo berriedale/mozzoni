@@ -1,9 +1,8 @@
 
-
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with GNAT.Sockets; use GNAT.Sockets;
 
 with Mozzoni; use Mozzoni;
+with Mozzoni.Client; use Mozzoni.Client;
 
 package Mozzoni.Commands is
 
@@ -11,8 +10,8 @@ package Mozzoni.Commands is
      with Pre => Value'Length > 0;
 
 
-   procedure Handle_Ping (Channel : in Stream_Access;
+   procedure Handle_Ping (Client  : in out Client_Type;
                           Command : Command_Array_Access)
-     with Pre => Channel /= null and Command /= null;
+     with Pre => Client.Is_Valid and Command /= null;
 
 end Mozzoni.Commands;
