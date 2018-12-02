@@ -101,6 +101,7 @@ begin
                Put_Line ("accepted...");
             else
                Client := Mozzoni.Client.Client_For (Polled_Event.Data.FD);
+               Put_Line ("Event type: " & Epoll.Epoll_Events_Type'Image (Polled_Event.Events));
                Client.Read_Available (Polled_Event.Data.FD);
             end if;
          end;

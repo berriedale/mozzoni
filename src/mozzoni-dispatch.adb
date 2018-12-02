@@ -1,4 +1,5 @@
 
+with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Strings.Unbounded.Hash;
 with Ada.Containers.Hashed_Maps; use Ada.Containers;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
@@ -34,6 +35,8 @@ package body Mozzoni.Dispatch is
          begin
             Handler (Client, Command_Access);
          end;
+      else
+         Put_Line ("Could not find handler for: " & To_String(Command_Name));
       end if;
 
    end Dispatch_Command;
