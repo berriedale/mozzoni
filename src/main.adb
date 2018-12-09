@@ -98,11 +98,20 @@ begin
                                               Event'Access);
 
                Mozzoni.Client.Register_Client (Client_Socket);
-               Put_Line ("accepted...");
+               Put_Line ("accepted..." & Integer'Image (To_C (Client_Socket)));
             else
-               Client := Mozzoni.Client.Client_For (Polled_Event.Data.FD);
-               Put_Line ("Event type: " & Epoll.Epoll_Events_Type'Image (Polled_Event.Events));
-               Client.Read_Available (Polled_Event.Data.FD);
+               declare
+               begin
+                  Put_Line ("read event for: " & Integer'Image (To_C (Polled_Event.Data.FD)));
+                  Put_Line ("Event type: " & Epoll.Epoll_Events_Type'Image (Polled_Event.Events));
+
+                  Client := Mozzoni.Client.Client_For (Polled_Event.Data.FD);
+                  Client.Read_Available (Polled_Event.Data.FD);
+               exception
+                  when Err : others =>
+                     Put_Line (Ada.Exceptions.Exception_Message(Err));
+               end;
+
             end if;
          end;
       end loop;
