@@ -1,2 +1,4 @@
 *.sw*
 obj/
+mozzoni-loc.xml
+gnatinspect.db
