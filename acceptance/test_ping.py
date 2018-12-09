@@ -1,18 +1,10 @@
 #!/usr/bin/env python
 
-import redis
-import unittest
+import helpers
 
-class PingTest(unittest.TestCase):
-    def setUp(self):
-        self.r = redis.Redis(host='localhost',
-                port=6379,
-                db=0,
-                socket_timeout=5)
-
+class PingTest(helpers.MozzoniTest):
     def test_ping(self):
         self.r.ping()
-
 
 if __name__ == '__main__':
     unittest.main()
