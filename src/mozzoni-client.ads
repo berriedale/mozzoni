@@ -1,11 +1,15 @@
 
 
-with Ada.Containers.Hashed_Maps; use Ada.Containers;
+with Ada.Containers.Formal_Hashed_Maps; use Ada.Containers;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with GNAT.Sockets; use GNAT.Sockets;
 
 
-package Mozzoni.Client is
+package Mozzoni.Client with
+
+SPARK_Mode => On
+
+is
 
    Read_Buffer_Size : constant := 32;
 
@@ -39,12 +43,12 @@ package Mozzoni.Client is
 
    function Hash_Descriptor (D : in Integer) return Hash_Type;
 
-   package Maps is new Ada.Containers.Hashed_Maps (Key_Type        => Integer,
+   package Maps is new Ada.Containers.Formal_Hashed_Maps (Key_Type        => Integer,
                                                    Element_Type    => Client_Type,
                                                    Hash            => Hash_Descriptor,
                                                    Equivalent_Keys => "=");
 
-   Directory : Maps.Map;
+   Directory : Maps.Map (4096, 1);
 
 
 

@@ -35,23 +35,37 @@ package body Mozzoni.Client is
                        Next_Terminator - 1);
       end Slice_To_Terminator;
 
+      procedure Split_Human_Readable (C : in Client_Type) is
+      begin
+         null;
+      end Split_Human_Readable;
+
    begin
-      Put_Line ("Buffer: " & To_String(Buffer));
-      if Client.Offset = 1 and Element (Buffer, Client.Offset) = '*' then
-         Client.Current_RESP_Type := Mozzoni.List;
-         Increment_Offset;
+      Put_Line ("Buffer: " & To_String (Buffer));
 
-         -- Find the index of the next terminator in order to determine the list
-         Seek_Index := Next_Terminator;
+      if Client.Offset = 1 then
+         case Element (Buffer, Client.Offset) is
+            when '*' =>
+               Client.Current_RESP_Type := Mozzoni.List;
+               Increment_Offset;
 
-         if Seek_Index = 0 then
-            Put_Line ("Terminator not found in Parse_Available!");
-            return;
-         end if;
+               -- Find the index of the next terminator in order to determine the list
+               Seek_Index := Next_Terminator;
 
-         Read_Number := Natural'Value (Slice_To_Terminator);
+               if Seek_Index = 0 then
+                  Put_Line ("Terminator not found in Parse_Available!");
+                  return;
+               end if;
 
-         Client.Command := new Command_Array (1 .. (Read_Number + 1));
+               Read_Number := Natural'Value (Slice_To_Terminator);
+
+               Client.Command := new Command_Array (1 .. (Read_Number + 1));
+            when others =>
+               Client.Current_RESP_Type := Mozzoni.Human_Readable;
+               -- We're going to assume for now that no human readable command is
+               -- going to have more than sixteen components
+               Client.Command := new Command_Array (1 .. 16);
+         end case;
       end if;
 
       -- If we do not have an allocated Command_Array yet, then there's no point
@@ -88,12 +102,18 @@ package body Mozzoni.Client is
 
                -- Bump the offset to include the read buffer and the next terminator
                Client.Offset := (Seek_Index + Read_Number + 2);
+            when CR =>
+               if Client.Current_RESP_Type = Mozzoni.Human_Readable then
+                  Client.Parsed_Command := Client.Parsed_Command + 1;
+                  Client.Command (Client.Parsed_Command) := (Mozzoni.Bulk,
+                                                             Unbounded_Slice (Buffer, 1, Client.Offset - 2));
+               end if;
             when others => null;
          end case;
-
       end loop;
 
-      if Client.Parsed_Command = (Client.Command'Length - 1) then
+      if (Client.Parsed_Command = (Client.Command'Length - 1)) or
+         (Client.Current_RESP_Type = Mozzoni.Human_Readable) then
          -- We have all our commands parts, which means we can dispatch!
          Dispatch_Command (Client, Client.Command);
          Delete (Client.Buffer, 1, Length (Client.Buffer));
