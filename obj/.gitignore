@@ -2,9 +2,11 @@
 *.a
 *.ali
 *.std*
+*.db
 mozzonid
 *.bexch
 *.cgpr
+gnatinspect*
 gnattest_stub/
 b__main.*
 *.deps
