@@ -12,3 +12,4 @@ b__main.*
 *.deps
 interop.d
 gnattest/harness/
+gnattest/tests/*.ads

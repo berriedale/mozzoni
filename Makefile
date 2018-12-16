@@ -6,8 +6,12 @@ all: build check
 
 build: $(OBJDIR)/mozzonid
 
-check: build prepare-test-harness
+check: build unit acceptance
+
+unit: prepare-test-harness
 	$(GNATTEST_HARNESS_DIR)/test_runner --exit-status=on
+
+acceptance: build
 	python -m unittest discover -s acceptance
 
 clean:
@@ -28,5 +32,5 @@ $(OBJDIR)/mozzonid:
 	gprbuild
 
 
-.PHONY: all build check clean \
+.PHONY: acceptance all build check clean unit \
 	prepare-test-harness regenerate-test-harness
