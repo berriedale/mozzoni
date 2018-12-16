@@ -1,1 +1,11 @@
-*
+*.o
+*.a
+*.ali
+*.std*
+mozzonid
+*.bexch
+*.cgpr
+gnattest_stub/
+b__main.*
+*.deps
+interop.d
