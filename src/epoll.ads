@@ -40,35 +40,38 @@ package Epoll is
             when others =>
                 U64 : aliased Interfaces.Unsigned_64;
         end case;
-    end record;
-    pragma Convention (C_Pass_By_Copy, Data_Type);
-    pragma Unchecked_Union (Data_Type);
-
+   end record
+     with Unchecked_Union,
+       Convention => C_Pass_By_Copy;
 
     type Event_Type is record
         Events : aliased Epoll_Events_Type;
         Data   : Data_Type;
-    end record;
-    pragma Convention (C_Pass_By_Copy, Event_Type);
+   end record
+     with Convention => C_Pass_By_Copy;
 
-    type Event_Array_Type is array (Integer range <>) of aliased Event_Type;
-    pragma Convention (C, Event_Array_Type);
+   type Event_Array_Type is array (Integer range <>) of aliased Event_Type
+     with Convention => C;
 
 
-    function Create (Size : Integer) return Epoll_Fd_Type;
-    pragma Import (C, Create, "epoll_create");
-
+   function Create (Size : Integer) return Epoll_Fd_Type
+     with Import,
+     Link_Name => "epoll_create",
+     Convention => C;
 
     function Control (Epfd : Epoll_Fd_Type;
                       Op : Epoll_Ctl_Type;
                       Fd : Epoll_Fd_Type;
-                      Events : access Event_Type) return Integer;
-    pragma Import (C, Control, "epoll_ctl");
-
+                      Events : access Event_Type) return Integer
+     with Import,
+     Link_Name => "epoll_ctl",
+     Convention => C;
 
     function Wait (Epfd : Epoll_Fd_Type;
                    Events : access Event_Type;
                    Max_Events : Integer;
-                   Timeout    : Integer) return Integer;
-    pragma Import (C, Wait, "epoll_wait");
+                   Timeout    : Integer) return Integer
+     with Import,
+     Link_Name => "epoll_wait",
+       Convention => C;
 end Epoll;
