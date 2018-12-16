@@ -30,44 +30,41 @@ package body Mozzoni.Test_Data.Tests is
 --  end read only
 
 --  begin read only
-   procedure Test_Print (Gnattest_T : in out Test);
-   procedure Test_Print_76b074 (Gnattest_T : in out Test) renames Test_Print;
---  id:2.2/76b0749ca70fd84d/Print/1/0/
-   procedure Test_Print (Gnattest_T : in out Test) is
-   --  mozzoni.ads:23:4:Print
---  end read only
-
-      pragma Unreferenced (Gnattest_T);
-
-   begin
-
-      AUnit.Assertions.Assert
-        (Gnattest_Generated.Default_Assert_Value,
-         "Test not implemented.");
-
---  begin read only
-   end Test_Print;
---  end read only
-
-
---  begin read only
    procedure Test_Error_Number (Gnattest_T : in out Test);
    procedure Test_Error_Number_8c9266 (Gnattest_T : in out Test) renames Test_Error_Number;
 --  id:2.2/8c926657c95c4d1a/Error_Number/1/0/
    procedure Test_Error_Number (Gnattest_T : in out Test) is
-   --  mozzoni.ads:27:4:Error_Number
+   --  mozzoni.ads:22:4:Error_Number
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
 
    begin
 
-      AUnit.Assertions.Assert
-        (Gnattest_Generated.Default_Assert_Value,
-         "Test not implemented.");
+      null;
 
 --  begin read only
    end Test_Error_Number;
+--  end read only
+
+
+--  begin read only
+   --  procedure Test_Print (Gnattest_T : in out Test);
+   --  procedure Test_Print_76b074 (Gnattest_T : in out Test) renames Test_Print;
+--  id:2.2/76b0749ca70fd84d/Print/1/1/
+   --  procedure Test_Print (Gnattest_T : in out Test) is
+--  end read only
+--
+--        pragma Unreferenced (Gnattest_T);
+--
+--     begin
+--
+--        AUnit.Assertions.Assert
+--          (Gnattest_Generated.Default_Assert_Value,
+--           "Test not implemented.");
+--
+--  begin read only
+   --  end Test_Print;
 --  end read only
 
 --  begin read only

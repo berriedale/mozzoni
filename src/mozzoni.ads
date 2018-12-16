@@ -19,15 +19,9 @@ package Mozzoni is
    type Command_Array is array (Positive range <>) of Command_Item;
    type Command_Array_Access is access all Command_Array;
 
-   -- Output the specified command to standard output
-   procedure Print (Command : in Command_Array_Access)
-     with Pre => Command /= null;
-
-
    function Error_Number return Integer
      with Import,
      Link_Name => "fetch_errno",
      Convention => C;
-
 
 end Mozzoni;
