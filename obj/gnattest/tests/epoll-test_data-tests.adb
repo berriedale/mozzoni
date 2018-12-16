@@ -41,9 +41,7 @@ package body Epoll.Test_Data.Tests is
 
    begin
 
-      AUnit.Assertions.Assert
-        (Gnattest_Generated.Default_Assert_Value,
-         "Test not implemented.");
+      null;
 
 --  begin read only
    end Test_Create;
@@ -62,9 +60,7 @@ package body Epoll.Test_Data.Tests is
 
    begin
 
-      AUnit.Assertions.Assert
-        (Gnattest_Generated.Default_Assert_Value,
-         "Test not implemented.");
+      null;
 
 --  begin read only
    end Test_Control;
@@ -83,9 +79,7 @@ package body Epoll.Test_Data.Tests is
 
    begin
 
-      AUnit.Assertions.Assert
-        (Gnattest_Generated.Default_Assert_Value,
-         "Test not implemented.");
+      null;
 
 --  begin read only
    end Test_Wait;
