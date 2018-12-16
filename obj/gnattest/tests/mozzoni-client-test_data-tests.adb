@@ -60,11 +60,12 @@ package body Mozzoni.Client.Test_Data.Tests is
 
       pragma Unreferenced (Gnattest_T);
 
+      Hashed : constant Hash_Type := Hash_Descriptor (1337);
+
    begin
 
-      AUnit.Assertions.Assert
-        (Gnattest_Generated.Default_Assert_Value,
-         "Test not implemented.");
+      AUnit.Assertions.Assert (Hashed > 0,
+                               "Expected Hash_Descriptor to turn an Integer into a Hash");
 
 --  begin read only
    end Test_Hash_Descriptor;
@@ -83,9 +84,8 @@ package body Mozzoni.Client.Test_Data.Tests is
 
    begin
 
-      AUnit.Assertions.Assert
-        (Gnattest_Generated.Default_Assert_Value,
-         "Test not implemented.");
+      -- This is an imported function
+      null;
 
 --  begin read only
    end Test_Read_Socket;
@@ -104,9 +104,8 @@ package body Mozzoni.Client.Test_Data.Tests is
 
    begin
 
-      AUnit.Assertions.Assert
-        (Gnattest_Generated.Default_Assert_Value,
-         "Test not implemented.");
+      -- This is an imported function
+      null;
 
 --  begin read only
    end Test_Write_Socket;

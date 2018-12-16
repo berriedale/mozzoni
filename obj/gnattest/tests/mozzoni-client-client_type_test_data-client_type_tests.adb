@@ -121,13 +121,12 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    --  mozzoni-client.ads:32:4:Is_Valid
 --  end read only
 
-      pragma Unreferenced (Gnattest_T);
+
+      Valid : constant Boolean := Gnattest_T.Fixture.Is_Valid;
 
    begin
 
-      AUnit.Assertions.Assert
-        (Gnattest_Generated.Default_Assert_Value,
-         "Test not implemented.");
+      AUnit.Assertions.Assert (Valid, "Expected the fixture to be a valid Client_Type");
 
 --  begin read only
    end Test_Is_Valid;
