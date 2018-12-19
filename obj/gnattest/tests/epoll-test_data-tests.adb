@@ -34,7 +34,7 @@ package body Epoll.Test_Data.Tests is
    procedure Test_Create_fa6782 (Gnattest_T : in out Test) renames Test_Create;
 --  id:2.2/fa6782675541c8a5/Create/1/0/
    procedure Test_Create (Gnattest_T : in out Test) is
-   --  epoll.ads:58:5:Create
+   --  epoll.ads:57:4:Create
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -72,7 +72,7 @@ package body Epoll.Test_Data.Tests is
    procedure Test_Wait_506aeb (Gnattest_T : in out Test) renames Test_Wait;
 --  id:2.2/506aeb0bf6872092/Wait/1/0/
    procedure Test_Wait (Gnattest_T : in out Test) is
-   --  epoll.ads:69:5:Wait
+   --  epoll.ads:70:5:Wait
 --  end read only
 
       pragma Unreferenced (Gnattest_T);

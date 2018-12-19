@@ -34,7 +34,7 @@ package body Mozzoni.Store.KeyValue.Test_Data.Tests is
    procedure Test_Is_Valid_Key_31ba94 (Gnattest_T : in out Test) renames Test_Is_Valid_Key;
 --  id:2.2/31ba94484d901b73/Is_Valid_Key/1/0/
    procedure Test_Is_Valid_Key (Gnattest_T : in out Test) is
-   --  mozzoni-store-keyvalue.ads:36:4:Is_Valid_Key
+   --  mozzoni-store-keyvalue.ads:41:4:Is_Valid_Key
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -57,7 +57,7 @@ package body Mozzoni.Store.KeyValue.Test_Data.Tests is
    procedure Test_Exists_128b94 (Gnattest_T : in out Test) renames Test_Exists;
 --  id:2.2/128b942adfb89988/Exists/1/0/
    procedure Test_Exists (Gnattest_T : in out Test) is
-   --  mozzoni-store-keyvalue.ads:39:4:Exists
+   --  mozzoni-store-keyvalue.ads:44:4:Exists
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -81,7 +81,7 @@ package body Mozzoni.Store.KeyValue.Test_Data.Tests is
    procedure Test_Is_Expired_1bbeb0 (Gnattest_T : in out Test) renames Test_Is_Expired;
 --  id:2.2/1bbeb029a8bd65d9/Is_Expired/1/0/
    procedure Test_Is_Expired (Gnattest_T : in out Test) is
-   --  mozzoni-store-keyvalue.ads:43:4:Is_Expired
+   --  mozzoni-store-keyvalue.ads:53:4:Is_Expired
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -109,7 +109,7 @@ package body Mozzoni.Store.KeyValue.Test_Data.Tests is
    procedure Test_Set_392ba2 (Gnattest_T : in out Test) renames Test_Set;
 --  id:2.2/392ba262388fda53/Set/1/0/
    procedure Test_Set (Gnattest_T : in out Test) is
-   --  mozzoni-store-keyvalue.ads:47:4:Set
+   --  mozzoni-store-keyvalue.ads:62:4:Set
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -134,7 +134,7 @@ package body Mozzoni.Store.KeyValue.Test_Data.Tests is
    procedure Test_Get_8e97f4 (Gnattest_T : in out Test) renames Test_Get;
 --  id:2.2/8e97f47f94d15b79/Get/1/0/
    procedure Test_Get (Gnattest_T : in out Test) is
-   --  mozzoni-store-keyvalue.ads:51:4:Get
+   --  mozzoni-store-keyvalue.ads:76:4:Get
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -156,6 +156,27 @@ package body Mozzoni.Store.KeyValue.Test_Data.Tests is
 
 --  begin read only
    end Test_Get;
+--  end read only
+
+
+--  begin read only
+   procedure Test_Flush (Gnattest_T : in out Test);
+   procedure Test_Flush_d9688c (Gnattest_T : in out Test) renames Test_Flush;
+--  id:2.2/d9688ca04470f15a/Flush/1/0/
+   procedure Test_Flush (Gnattest_T : in out Test) is
+   --  mozzoni-store-keyvalue.ads:83:4:Flush
+--  end read only
+
+      pragma Unreferenced (Gnattest_T);
+
+   begin
+
+      AUnit.Assertions.Assert
+        (Gnattest_Generated.Default_Assert_Value,
+         "Test not implemented.");
+
+--  begin read only
+   end Test_Flush;
 --  end read only
 
 --  begin read only
