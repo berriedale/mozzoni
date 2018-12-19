@@ -518,7 +518,8 @@ GNATdoc.Documentation = {
               "line": 11,
               "column": 31,
               "type": {
-                "label": "Unbounded_String"
+                "label": "Unbounded_String",
+                "docHref": "docs/unbounded_string___spec.html#L79C9"
               },
               "description": [
               ]

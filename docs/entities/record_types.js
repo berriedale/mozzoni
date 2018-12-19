@@ -21,6 +21,20 @@ GNATdoc.EntitiesCategory = {
       "declared": "Epoll",
       "declared_qualifier": "",
       "srcHref": "srcs/epoll.ads.html#L47"
+    },
+    {
+      "label": "Key_Type",
+      "docHref": "docs/mozzoni__store__keyvalue___spec.html#L18C12",
+      "declared": "Mozzoni.Store.KeyValue",
+      "declared_qualifier": "",
+      "srcHref": "srcs/mozzoni-store-keyvalue.ads.html#L18"
+    },
+    {
+      "label": "Value_Type",
+      "docHref": "docs/mozzoni__store__keyvalue___spec.html#L25C9",
+      "declared": "Mozzoni.Store.KeyValue",
+      "declared_qualifier": "",
+      "srcHref": "srcs/mozzoni-store-keyvalue.ads.html#L25"
     }
   ]
 };

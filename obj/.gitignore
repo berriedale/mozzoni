@@ -13,3 +13,4 @@ b__main.*
 interop.d
 gnattest/harness/
 gnattest/tests/*.ads
+gnatdoc/

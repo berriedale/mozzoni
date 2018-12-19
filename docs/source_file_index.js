@@ -28,6 +28,14 @@ GNATdoc.SourceFileIndex = [
     "srcHref": "srcs/mozzoni-parser.ads.html"
   },
   {
+    "label": "mozzoni-store-keyvalue.ads",
+    "srcHref": "srcs/mozzoni-store-keyvalue.ads.html"
+  },
+  {
+    "label": "mozzoni-store.ads",
+    "srcHref": "srcs/mozzoni-store.ads.html"
+  },
+  {
     "label": "mozzoni.ads",
     "srcHref": "srcs/mozzoni.ads.html"
   }

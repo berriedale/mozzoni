@@ -30,6 +30,27 @@ GNATdoc.EntitiesCategory = {
       "srcHref": "srcs/mozzoni.ads.html#L22"
     },
     {
+      "label": "Exists",
+      "docHref": "docs/mozzoni__store__keyvalue___spec.html#L44C13",
+      "declared": "Mozzoni.Store.KeyValue",
+      "declared_qualifier": "",
+      "srcHref": "srcs/mozzoni-store-keyvalue.ads.html#L44"
+    },
+    {
+      "label": "Flush",
+      "docHref": "docs/mozzoni__store__keyvalue___spec.html#L83C14",
+      "declared": "Mozzoni.Store.KeyValue",
+      "declared_qualifier": "",
+      "srcHref": "srcs/mozzoni-store-keyvalue.ads.html#L83"
+    },
+    {
+      "label": "Get",
+      "docHref": "docs/mozzoni__store__keyvalue___spec.html#L76C13",
+      "declared": "Mozzoni.Store.KeyValue",
+      "declared_qualifier": "",
+      "srcHref": "srcs/mozzoni-store-keyvalue.ads.html#L76"
+    },
+    {
       "label": "Handle_Get",
       "docHref": "docs/mozzoni__commands__keys___spec.html#L12C14",
       "declared": "Mozzoni.Commands.Keys",
@@ -56,6 +77,20 @@ GNATdoc.EntitiesCategory = {
       "declared": "Mozzoni.Client",
       "declared_qualifier": "",
       "srcHref": "srcs/mozzoni-client.ads.html#L40"
+    },
+    {
+      "label": "Is_Expired",
+      "docHref": "docs/mozzoni__store__keyvalue___spec.html#L53C13",
+      "declared": "Mozzoni.Store.KeyValue",
+      "declared_qualifier": "",
+      "srcHref": "srcs/mozzoni-store-keyvalue.ads.html#L53"
+    },
+    {
+      "label": "Is_Valid_Key",
+      "docHref": "docs/mozzoni__store__keyvalue___spec.html#L41C13",
+      "declared": "Mozzoni.Store.KeyValue",
+      "declared_qualifier": "",
+      "srcHref": "srcs/mozzoni-store-keyvalue.ads.html#L41"
     },
     {
       "label": "Load",
@@ -133,6 +168,13 @@ GNATdoc.EntitiesCategory = {
       "declared": "Mozzoni.Dispatch",
       "declared_qualifier": "",
       "srcHref": "srcs/mozzoni-dispatch.ads.html#L21"
+    },
+    {
+      "label": "Set",
+      "docHref": "docs/mozzoni__store__keyvalue___spec.html#L62C13",
+      "declared": "Mozzoni.Store.KeyValue",
+      "declared_qualifier": "",
+      "srcHref": "srcs/mozzoni-store-keyvalue.ads.html#L62"
     },
     {
       "label": "Wait",

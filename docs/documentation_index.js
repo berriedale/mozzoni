@@ -43,5 +43,20 @@ GNATdoc.DocumentationIndex = [
     "label": "Mozzoni.Parser",
     "qualifier": "",
     "file": "docs/mozzoni__parser___spec.html"
+  },
+  {
+    "label": "Mozzoni.Store",
+    "qualifier": "",
+    "file": "docs/mozzoni__store___spec.html"
+  },
+  {
+    "label": "Mozzoni.Store.KeyValue",
+    "qualifier": "",
+    "file": "docs/mozzoni__store__keyvalue___spec.html"
+  },
+  {
+    "label": "Mozzoni.Store.KeyValue.Hashed_Maps",
+    "qualifier": "(generic instantiation)",
+    "file": "docs/mozzoni__store__keyvalue___hashed_maps___spec.html"
   }
 ];
