@@ -12,6 +12,8 @@ with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 with Ada.Text_IO; use Ada.Text_IO;
 
+with Mozzoni.Store.KeyValue;
+
 package body Mozzoni.Commands.Keys is
 
    No_Expiry : constant Ada.Calendar.Time := Ada.Calendar.Time_Of (1970, 1, 1);
