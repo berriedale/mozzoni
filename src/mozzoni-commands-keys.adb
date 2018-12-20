@@ -12,7 +12,7 @@ with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 with Ada.Text_IO; use Ada.Text_IO;
 
-with Mozzoni.Store.KeyValue;
+with Mozzoni.Store;
 
 package body Mozzoni.Commands.Keys is
 

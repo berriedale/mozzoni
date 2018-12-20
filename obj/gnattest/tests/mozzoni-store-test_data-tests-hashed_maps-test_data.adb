@@ -3,12 +3,12 @@
 --  automatically. Contents of this package can be modified in any way
 --  except for sections surrounded by a 'read only' marker.
 
-package body Mozzoni.Store.KeyValue.Test_Data is
+package body Mozzoni.Store.Test_Data.Tests.Hashed_Maps.Test_Data is
 
    procedure Set_Up (Gnattest_T : in out Test) is
       pragma Unreferenced (Gnattest_T);
    begin
-      Flush;
+      null;
    end Set_Up;
 
    procedure Tear_Down (Gnattest_T : in out Test) is
@@ -17,4 +17,16 @@ package body Mozzoni.Store.KeyValue.Test_Data is
       null;
    end Tear_Down;
 
-end Mozzoni.Store.KeyValue.Test_Data;
+   procedure User_Set_Up (Gnattest_T : in out New_Test) is
+      pragma Unreferenced (Gnattest_T);
+   begin
+      null;
+   end User_Set_Up;
+
+   procedure User_Tear_Down (Gnattest_T : in out New_Test) is
+      pragma Unreferenced (Gnattest_T);
+   begin
+      null;
+   end User_Tear_Down;
+
+end Mozzoni.Store.Test_Data.Tests.Hashed_Maps.Test_Data;
