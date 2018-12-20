@@ -4,7 +4,7 @@ GNATTEST_HARNESS_DIR=$(OBJDIR)/gnattest/harness
 
 all: build check
 
-build: $(OBJDIR)/mozzonid
+build: mozzonid.gpr mozzoni.gpr $(OBJDIR)/mozzonid
 
 check: build unit acceptance
 
@@ -29,7 +29,7 @@ regenerate-test-harness:
 ##############################
 
 $(OBJDIR)/mozzonid:
-	gprbuild
+	gprbuild -Pmozzoni.gpr
 
 
 .PHONY: acceptance all build check clean unit \
