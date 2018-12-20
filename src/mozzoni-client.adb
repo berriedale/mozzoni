@@ -1,4 +1,3 @@
-with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Characters.Latin_1;
 
 with Mozzoni.Parser; use Mozzoni.Parser;
@@ -41,7 +40,6 @@ package body Mozzoni.Client is
       end Split_Human_Readable;
 
    begin
-      Put_Line ("Buffer: " & To_String (Buffer));
 
       if Client.Offset = 1 then
          case Element (Buffer, Client.Offset) is
@@ -53,7 +51,7 @@ package body Mozzoni.Client is
                Seek_Index := Next_Terminator;
 
                if Seek_Index = 0 then
-                  Put_Line ("Terminator not found in Parse_Available!");
+                  Mozzoni.Log.Log_Message (Alog.Warning, "Terminator not found in Parse_Available!");
                   return;
                end if;
 
@@ -98,7 +96,7 @@ package body Mozzoni.Client is
                                                             Seek_Index,
                                                             Seek_Index + Read_Number - 1));
 
-               Put_Line ("Parsed item: " & To_String (Client.Command (Client.Parsed_Command).Value));
+               Mozzoni.Log.Log_Message (Alog.Info, "Parsed item: " & To_String (Client.Command (Client.Parsed_Command).Value));
 
                -- Bump the offset to include the read buffer and the next terminator
                Client.Offset := (Seek_Index + Read_Number + 2);
@@ -118,7 +116,7 @@ package body Mozzoni.Client is
          Dispatch_Command (Client, Client.Command);
          Delete (Client.Buffer, 1, Length (Client.Buffer));
       else
-         Put_Line ("Not enough data yet to dispatch");
+         Mozzoni.Log.Log_Message (Alog.Warning, "Not enough data yet to dispatch");
       end if;
 
    end Parse_Available;
@@ -128,12 +126,11 @@ package body Mozzoni.Client is
       Bytes_Read   : Integer := 0;
       Buffer       : aliased String (1 .. Read_Buffer_Size);
    begin
-      Put_Line ("Read_Available");
 
       loop
          Bytes_Read := Integer (Read_Socket (Socket, Buffer'Address, Buffer'Length));
          if Mozzoni.Error_Number /= 0 then
-            Put_Line ("Errno set while reading socket:" & Integer'Image (Mozzoni.Error_Number));
+            Mozzoni.Log.Log_Message (Alog.Error, "Errno set while reading socket:" & Integer'Image (Mozzoni.Error_Number));
          end if;
 
          exit when Bytes_Read = 0;
@@ -156,14 +153,12 @@ package body Mozzoni.Client is
    procedure Write (Client : in out Client_Type;
                     Buffer : in String) is
    begin
-      Put (Buffer);
       String'Write (Client.Stream, Buffer);
    end Write;
 
    procedure Write (Client    : in out Client_Type;
                     Char : in Character) is
    begin
-      Put (Char);
       Character'Write (Client.Stream, Char);
    end Write;
 

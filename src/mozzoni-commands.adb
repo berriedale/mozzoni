@@ -1,5 +1,4 @@
 
-with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Characters.Latin_1; use Ada.Characters.Latin_1;
 
 package body Mozzoni.Commands is
@@ -18,7 +17,6 @@ package body Mozzoni.Commands is
    procedure Handle_Ping (Client : in out Client_Type;
                           Command : Command_Array_Access) is
    begin
-      Put_Line ("Handle_Ping");
       Client.Write (Prepare_Response ("+PONG"));
    end Handle_Ping;
 

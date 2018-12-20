@@ -1,13 +1,13 @@
 
-with GNAT.Sockets;
-with Interfaces.C;
-with System;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+
+with Alog.Logger;
 
 package Mozzoni is
 
    Port             : constant Natural := 6379;
    Default_Bind     : constant String := "127.0.0.1";
+   Log : Alog.Logger.Instance (Init => true);
 
 
    type RESP_Type is (None, Human_Readable, Simple_String, Error, Int, Bulk, List);

@@ -1,9 +1,9 @@
-
+with System;
+with Interfaces.C;
 
 with Ada.Containers.Hashed_Maps; use Ada.Containers;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with GNAT.Sockets; use GNAT.Sockets;
-
 
 package Mozzoni.Client is
 

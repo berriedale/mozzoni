@@ -1,7 +1,6 @@
 
 package body Mozzoni.Store is
 
-
    function Is_Valid_Key (Key : in Key_Type) return Boolean is
    begin
       return Length (Key) > 0;
