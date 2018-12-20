@@ -20,13 +20,18 @@ package body Mozzoni.Commands.Keys is
       Key_Item : Command_Item := Command (2);
       Buffer : Unbounded_String := Command (3).Value;
       Value_Item : Value_Type;
-      Foo : Float := 1.0;
+
+      function Convert_To_Secs (Item : in Command_Item) return Duration is
+      begin
+         return Duration'Value (To_String (Item.Value));
+      end Convert_To_Secs;
+
    begin
       Value_Item.Buffer := Buffer;
 
       if Command'Length > 5 then
          if Command (4).Value = "EX" then
-            Value_Item.Expiration := Ada.Calendar.Clock + 1.0; -- Float'Value (To_String (Command (5).Value));
+            Value_Item.Expiration := Ada.Calendar.Clock + Convert_To_Secs (Command (5));
          end if;
       end if;
 
@@ -39,7 +44,6 @@ package body Mozzoni.Commands.Keys is
    procedure Handle_Get (Client : in out Client_Type;
                          Command : Command_Array_Access) is
       use Ada.Characters.Latin_1;
-      use type Ada.Calendar.Time;
 
       Key_Item : Command_Item := Command (2);
       Key : constant Unbounded_String := Key_Item.Value;
