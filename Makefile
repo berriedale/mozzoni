@@ -1,6 +1,7 @@
 
 OBJDIR:=obj
 GNATTEST_HARNESS_DIR=$(OBJDIR)/gnattest/harness
+GPRFLAGS=-XALOG_VERSION=""
 
 all: build check
 
@@ -21,15 +22,15 @@ prepare-test-harness:
 	if [ ! -d $(GNATTEST_HARNESS_DIR) ]; then \
 		$(MAKE) regenerate-test-harness; \
 	fi;
-	(cd $(GNATTEST_HARNESS_DIR) && gprbuild -Ptest_driver.gpr)
+	(cd $(GNATTEST_HARNESS_DIR) && gprbuild -Ptest_driver.gpr $(GPRFLAGS) )
 
 regenerate-test-harness:
-	gnat test -dd -Pmozzoni.gpr
+	gnat test -dd -Pmozzonid.gpr $(GPRFLAGS)
 
 ##############################
 
 $(OBJDIR)/mozzonid:
-	gprbuild
+	gprbuild -Pmozzoni.gpr $(GPRFLAGS)
 
 
 .PHONY: acceptance all build check clean unit \
