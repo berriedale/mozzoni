@@ -11,7 +11,6 @@ with GNAT.Sockets; use GNAT.Sockets;
 
 with Mozzoni.Command_Loader;
 with Mozzoni; use Mozzoni;
-with Mozzoni.Parser; use Mozzoni.Parser;
 with Mozzoni.Dispatch; use Mozzoni.Dispatch;
 
 with Interfaces.C;

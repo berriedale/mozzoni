@@ -1,6 +1,5 @@
 with Ada.Characters.Latin_1;
 
-with Mozzoni.Parser; use Mozzoni.Parser;
 with Mozzoni.Dispatch; use Mozzoni.Dispatch;
 
 package body Mozzoni.Client is
