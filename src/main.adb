@@ -4,19 +4,19 @@
 
 with Ada.Exceptions;
 with Ada.Streams;
-with Ada.Characters.Latin_1;
+with Alog;
+with Epoll;
+with Interfaces.C;
+
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with Ada.Text_IO; use Ada.Text_IO;
 with GNAT.Sockets; use GNAT.Sockets;
 
 with Mozzoni.Command_Loader;
+with Mozzoni.Client;
+
 with Mozzoni; use Mozzoni;
 with Mozzoni.Dispatch; use Mozzoni.Dispatch;
 
-with Interfaces.C;
-with Epoll;
-
-with Mozzoni.Client;
 
 procedure Main is
    Server_Sock : Socket_Type;
@@ -26,12 +26,6 @@ procedure Main is
    Event       : aliased Epoll.Event_Type;
    Events      : Epoll.Event_Array_Type (1 .. 10);
    Return_Value, Descriptors : Integer;
-
-   function To_Natural (Buffer : in Unbounded_String) return Natural is
-   begin
-      return Natural'Value (To_String (Buffer));
-   end To_Natural;
-
 
    -- Initialize the Sock_Addr_Type necessary to create the server's
    -- socket bind
@@ -62,7 +56,7 @@ begin
    EpollFD := Epoll.Create (Events'Last + 1);
 
    if EpollFD = -1 then
-      Put_Line ("Failed to create epoll(7) file descriptor");
+      Log.Log_Message (Alog.Error, "Failed to create epoll(7) file descriptor");
       return;
    end if;
 
@@ -71,8 +65,7 @@ begin
 
    Return_Value := Epoll.Control (EpollFD, Epoll.Epoll_Ctl_Add, To_C (Server_Sock), Event'Access);
 
-
-   Put_Line ("mozzinid online and ready for work..");
+   Log.Log_Message (Alog.Info, "mozzinid online and ready for work..");
 
    loop
       Descriptors := 0;
@@ -96,19 +89,24 @@ begin
                                               To_C (Client_Socket),
                                               Event'Access);
 
-               Mozzoni.Client.Register_Client (Client_Socket);
-               Put_Line ("accepted..." & Integer'Image (To_C (Client_Socket)));
+               if Return_Value /= 0 then
+                  Log.Log_Message (Alog.Error, "Failed to add a file descriptor to the Epoll descriptor");
+               else
+                  Mozzoni.Client.Register_Client (Client_Socket);
+                  Log.Log_Message (Alog.Debug, "accepted..." & Integer'Image (To_C (Client_Socket)));
+               end if;
+
             else
                declare
                begin
-                  Put_Line ("read event for: " & Integer'Image (To_C (Polled_Event.Data.FD)));
-                  Put_Line ("Event type: " & Epoll.Epoll_Events_Type'Image (Polled_Event.Events));
+                  Log.Log_Message (Alog.Debug, "read event for: " & Integer'Image (To_C (Polled_Event.Data.FD)));
+                  Log.Log_Message (Alog.Debug, "Event type: " & Epoll.Epoll_Events_Type'Image (Polled_Event.Events));
 
                   Client := Mozzoni.Client.Client_For (Polled_Event.Data.FD);
                   Client.Read_Available (Polled_Event.Data.FD);
                exception
                   when Err : others =>
-                     Put_Line (Ada.Exceptions.Exception_Message(Err));
+                     Log.Log_Message (Alog.Error, Ada.Exceptions.Exception_Message(Err));
                end;
 
             end if;
