@@ -127,7 +127,7 @@ package body Mozzoni.Client is
    begin
 
       loop
-         Bytes_Read := Integer (Read_Socket (Socket, Buffer'Address, Buffer'Length));
+         Bytes_Read := Integer (Read_Socket (Socket, Buffer'Address, Read_Buffer_Size));
          if Mozzoni.Error_Number /= 0 then
             Mozzoni.Log.Log_Message (Alog.Error, "Errno set while reading socket:" & Integer'Image (Mozzoni.Error_Number));
          end if;

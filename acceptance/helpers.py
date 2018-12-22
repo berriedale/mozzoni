@@ -4,14 +4,17 @@ import time
 import unittest
 
 class MozzoniTest(unittest.TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpClass(self):
         self.server = subprocess.Popen(['./obj/mozzonid'])
         time.sleep(1)
         self.r = redis.Redis(host='localhost',
                 port=6379,
                 db=0,
                 socket_timeout=5)
-    def tearDown(self):
+
+    @classmethod
+    def tearDownClass(self):
         if self.server:
             self.server.terminate()
 

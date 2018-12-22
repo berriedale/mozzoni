@@ -10,11 +10,14 @@ package body Mozzoni.Store is
 
       function Exists (Key : in Key_Type) return Boolean is
       begin
-         if Is_Expired (Key) then
-            return False;
+         if Hashed_Maps.Contains (Store, Key) then
+            if Is_Expired (Key) then
+               return False;
+            else
+               return True;
+            end if;
          end if;
-
-         return Hashed_Maps.Contains (Store, Key);
+         return False;
       end Exists;
 
 
@@ -23,7 +26,6 @@ package body Mozzoni.Store is
          Now   : constant Ada.Calendar.Time := Ada.Calendar.Clock;
 
          use type Ada.Calendar.Time;
-
       begin
          if Value.Expiration = No_Expiry then
             return False;
