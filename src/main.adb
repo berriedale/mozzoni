@@ -24,7 +24,7 @@ procedure Main is
 
    EpollFD     : Epoll.Epoll_Fd_Type;
    Event       : aliased Epoll.Event_Type;
-   Events      : Epoll.Event_Array_Type (1 .. 10);
+   Events      : Epoll.Event_Array_Type (1 .. 1);
    Return_Value, Descriptors : Integer;
 
    -- Initialize the Sock_Addr_Type necessary to create the server's
