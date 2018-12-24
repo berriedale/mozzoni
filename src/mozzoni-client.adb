@@ -152,6 +152,7 @@ package body Mozzoni.Client is
    procedure Write (Client : in out Client_Type;
                     Buffer : in String) is
    begin
+      Log.Log_Message (Alog.info, "Writing to client: " & Buffer);
       String'Write (Client.Stream, Buffer);
    end Write;
 
@@ -204,6 +205,8 @@ package body Mozzoni.Client is
    begin
       if Maps.Contains (Directory, Descriptor) then
          return Maps.Element (Directory, Descriptor);
+      else
+         raise Constraint_Error with "Failed to find a client for " & Integer'Image (Descriptor);
       end if;
    end Client_For;
 

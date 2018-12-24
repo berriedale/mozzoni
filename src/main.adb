@@ -66,15 +66,20 @@ begin
    Return_Value := Epoll.Control (EpollFD, Epoll.Epoll_Ctl_Add, To_C (Server_Sock), Event'Access);
 
    Log.Log_Message (Alog.Info, "mozzinid online and ready for work..");
+   Log.Log_Message (Alog.Info, "epoll descriptor" & Integer'Image (EpollFD));
+   Log.Log_Message (Alog.Info, "server sock" & Integer'Image (To_C (Server_Sock)));
 
    loop
       Descriptors := 0;
-      Descriptors := Epoll.Wait (EpollFD, Events (Events'First)'Access, 10, -1);
+      Descriptors := Epoll.Wait (EpollFD,
+                                 Events,
+                                 Events'Length,
+                                 100);
 
       for Index in 1 .. Descriptors loop
+         Log.Log_Message (Alog.Info, "Index" & Integer'Image (Index));
          declare
             Polled_Event : Epoll.Event_Type := Events (Integer (Index));
-            Client : Mozzoni.Client.Client_Type;
          begin
             if Polled_Event.Data.FD = Server_Sock then
                -- Accept the new connection
@@ -90,23 +95,25 @@ begin
                                               Event'Access);
 
                if Return_Value /= 0 then
-                  Log.Log_Message (Alog.Error, "Failed to add a file descriptor to the Epoll descriptor");
+                  raise Constraint_Error with "Failed to add descriptor";
                else
                   Mozzoni.Client.Register_Client (Client_Socket);
-                  Log.Log_Message (Alog.Debug, "accepted..." & Integer'Image (To_C (Client_Socket)));
+                  Log.Log_Message (Alog.Info, "accepted..." & Integer'Image (To_C (Client_Socket)));
                end if;
 
             else
-               declare
-               begin
-                  Log.Log_Message (Alog.Debug, "read event for: " & Integer'Image (To_C (Polled_Event.Data.FD)));
-                  Log.Log_Message (Alog.Debug, "Event type: " & Epoll.Epoll_Events_Type'Image (Polled_Event.Events));
+               Log.Log_Message (Alog.Info, "read event for: " & Integer'Image (To_C (Polled_Event.Data.FD)));
 
-                  Client := Mozzoni.Client.Client_For (Polled_Event.Data.FD);
-                  Client.Read_Available (Polled_Event.Data.FD);
+               declare
+                  Client : Mozzoni.Client.Client_Type := Mozzoni.Client.Client_For (Polled_Event.Data.FD);
+               begin
+                  Log.Log_Message (Alog.Info, "read event for: " & Integer'Image (To_C (Polled_Event.Data.FD)));
+                  Log.Log_Message (Alog.Debug, "Event type: " & Epoll.Epoll_Events_Type'Image (Polled_Event.Events));
+                  CLient.Read_Available (Polled_Event.Data.FD);
                exception
                   when Err : others =>
-                     Log.Log_Message (Alog.Error, Ada.Exceptions.Exception_Message(Err));
+                     Log.Log_Message (Alog.Error, Ada.Exceptions.Exception_Message (Err));
+                     raise;
                end;
 
             end if;
