@@ -12,7 +12,7 @@ project Mozzonid is
    end Builder;
 
    package Compiler is
-      for Switches ("ada") use ("-gnato", "-gnat12", "-gnatf", "-fstack-check", "-g");
+      for Switches ("ada") use ("-gnat12", "-gnatf", "-fstack-check", "-g", "-gnato", "-pg");
    end Compiler;
 
    package Ide is
@@ -26,5 +26,9 @@ project Mozzonid is
    package Make is
       for Makefile use "Makefile";
    end Make;
+
+   package Linker is
+      for Switches ("ada") use ("-pg");
+   end Linker;
 
 end Mozzonid;

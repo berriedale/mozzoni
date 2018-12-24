@@ -4,6 +4,7 @@
 
 with Ada.Exceptions;
 with Ada.Streams;
+with Ada.Text_IO;
 with Alog;
 with Epoll;
 with Interfaces.C;
@@ -16,6 +17,8 @@ with Mozzoni.Client;
 
 with Mozzoni; use Mozzoni;
 with Mozzoni.Dispatch; use Mozzoni.Dispatch;
+
+with Ada.Command_Line;
 
 
 procedure Main is
@@ -40,6 +43,28 @@ procedure Main is
 
    Client_Socket : Socket_Type;
    Socket_Request : Request_Type := (Non_Blocking_IO, True);
+   Should_Exit : Boolean := False;
+
+   task Standard_Input;
+
+   task body Standard_Input is
+      use Ada.Command_Line;
+      use Ada.Text_IO;
+
+      Ch : Character;
+   begin
+      Log.Log_Message (Alog.Info, "Waiting..");
+
+      while Should_Exit = False loop
+         Get (Ch);
+         if Ch = 'q' then
+            Log.Log_Message (Alog.Info, "Should exit");
+            Should_Exit := True;
+         end if;
+      end loop;
+
+   end Standard_Input;
+
 begin
 
    Mozzoni.Command_Loader.Load;
@@ -70,6 +95,10 @@ begin
    Log.Log_Message (Alog.Info, "server sock" & Integer'Image (To_C (Server_Sock)));
 
    loop
+      if Should_Exit then
+         return;
+      end if;
+
       Descriptors := 0;
       Descriptors := Epoll.Wait (EpollFD,
                                  Events,
