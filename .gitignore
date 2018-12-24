@@ -1,3 +1,5 @@
 *.sw*
 mozzoni-loc.xml
 gnatinspect.db
+gmon.out
+*.cgpr
