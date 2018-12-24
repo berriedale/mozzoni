@@ -66,9 +66,6 @@ package body Mozzoni.Commands.Keys is
    begin
       Value_Item.Buffer := Buffer;
 
-      Log.Log_Message (Alog.Warning,
-                               "Commands length: " & Integer'Image (Command'Length));
-
       if Options.Expire_Seconds > 0.0 then
          Value_Item.Expiration := Now + Options.Expire_Seconds;
       elsif Options.Expire_Milliseconds > 0.0 then

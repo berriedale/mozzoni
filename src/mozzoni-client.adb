@@ -95,8 +95,6 @@ package body Mozzoni.Client is
                                                             Seek_Index,
                                                             Seek_Index + Read_Number - 1));
 
-               Mozzoni.Log.Log_Message (Alog.Info, "Parsed item: " & To_String (Client.Command (Client.Parsed_Command).Value));
-
                -- Bump the offset to include the read buffer and the next terminator
                Client.Offset := (Seek_Index + Read_Number + 2);
             when CR =>
@@ -128,7 +126,7 @@ package body Mozzoni.Client is
 
       loop
          Bytes_Read := Integer (Read_Socket (Socket, Buffer'Address, Read_Buffer_Size));
-         if Mozzoni.Error_Number /= 0 then
+         if Mozzoni.Error_Number /= 0 and Mozzoni.Error_Number /= 22 then
             Mozzoni.Log.Log_Message (Alog.Error, "Errno set while reading socket:" & Integer'Image (Mozzoni.Error_Number));
          end if;
 
@@ -152,7 +150,6 @@ package body Mozzoni.Client is
    procedure Write (Client : in out Client_Type;
                     Buffer : in String) is
    begin
-      Log.Log_Message (Alog.info, "Writing to client: " & Buffer);
       String'Write (Client.Stream, Buffer);
    end Write;
 

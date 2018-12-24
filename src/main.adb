@@ -106,7 +106,6 @@ begin
                                  100);
 
       for Index in 1 .. Descriptors loop
-         Log.Log_Message (Alog.Info, "Index" & Integer'Image (Index));
          declare
             Polled_Event : Epoll.Event_Type := Events (Integer (Index));
          begin
@@ -131,13 +130,9 @@ begin
                end if;
 
             else
-               Log.Log_Message (Alog.Info, "read event for: " & Integer'Image (To_C (Polled_Event.Data.FD)));
-
                declare
                   Client : Mozzoni.Client.Client_Type := Mozzoni.Client.Client_For (Polled_Event.Data.FD);
                begin
-                  Log.Log_Message (Alog.Info, "read event for: " & Integer'Image (To_C (Polled_Event.Data.FD)));
-                  Log.Log_Message (Alog.Debug, "Event type: " & Epoll.Epoll_Events_Type'Image (Polled_Event.Events));
                   CLient.Read_Available (Polled_Event.Data.FD);
                exception
                   when Err : others =>
