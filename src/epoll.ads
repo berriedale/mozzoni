@@ -68,7 +68,7 @@ package Epoll is
      Convention => C;
 
     function Wait (Epfd : Epoll_Fd_Type;
-                   Events : access Event_Type;
+                   Events : Event_Array_Type;
                    Max_Events : Integer;
                    Timeout    : Integer) return Integer
      with Import,

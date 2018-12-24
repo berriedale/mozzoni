@@ -53,7 +53,7 @@ begin
 
    Bind_Socket (Server_Sock, Server_Addr);
    Listen_Socket (Server_Sock);
-   EpollFD := Epoll.Create (Events'Last + 1);
+   EpollFD := Epoll.Create (Events'Length);
 
    if EpollFD = -1 then
       Log.Log_Message (Alog.Error, "Failed to create epoll(7) file descriptor");
