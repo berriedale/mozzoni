@@ -7,20 +7,22 @@ package Epoll is
 
     subtype Epoll_Fd_Type is Integer;
 
-    type Epoll_Events_Type is (Epoll_In,
-                               Epoll_Pri,
-                               Epoll_Out,
-                               Epoll_In_And_Out,
-                               Epoll_Et,
-                               Epoll_In_And_Et
-                              );
-    for Epoll_Events_Type use (Epoll_In => 1,
-                                Epoll_Pri => 2,
-                               Epoll_Out => 4,
-                               Epoll_In_And_Out => 5,
-                                Epoll_Et  => 2147483648,
-                                Epoll_In_And_Et => 2147483649);
-    for Epoll_Events_Type'Size use Interfaces.C.int'Size;
+    subtype Epoll_Events_Type is Interfaces.Unsigned_32;
+    EPOLLIN : constant Epoll_Events_Type := 1;
+    EPOLLPRI : constant Epoll_Events_Type := 2;
+    EPOLLOUT : constant Epoll_Events_Type := 4;
+    EPOLLRDNORM : constant Epoll_Events_Type := 64;
+    EPOLLRDBAND : constant Epoll_Events_Type := 128;
+    EPOLLWRNORM : constant Epoll_Events_Type := 256;
+    EPOLLWRBAND : constant Epoll_Events_Type := 512;
+    EPOLLMSG : constant Epoll_Events_Type := 1024;
+    EPOLLERR : constant Epoll_Events_Type := 8;
+    EPOLLHUP : constant Epoll_Events_Type := 16;
+    EPOLLRDHUP : constant Epoll_Events_Type := 8192;
+    EPOLLEXCLUSIVE : constant Epoll_Events_Type := 268435456;
+    EPOLLWAKEUP : constant Epoll_Events_Type := 536870912;
+    EPOLLONESHOT : constant Epoll_Events_Type := 1073741824;
+    EPOLLET : constant Epoll_Events_Type := 2147483648;
 
     type Epoll_Ctl_Type is (Epoll_Ctl_Add,
                             Epoll_Ctl_Del,
@@ -44,9 +46,9 @@ package Epoll is
      with Unchecked_Union,
        Convention => C_Pass_By_Copy;
 
-    type Event_Type is record
-        Events : aliased Epoll_Events_Type;
-        Data   : Data_Type;
+   type Event_Type is record
+      Events : aliased Interfaces.Unsigned_32;
+      Data   : Data_Type;
    end record
      with Convention => C_Pass_By_Copy;
 

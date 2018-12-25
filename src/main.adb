@@ -22,6 +22,7 @@ with Ada.Command_Line;
 
 
 procedure Main is
+   use type Interfaces.Unsigned_32;
    Server_Sock : Socket_Type;
    Server_Addr : Sock_Addr_Type;
 
@@ -85,7 +86,7 @@ begin
       return;
    end if;
 
-   Event.Events := Epoll.Epoll_In_And_Out;
+   Event.Events := Epoll.EPOLLIN or Epoll.EPOLLET;
    Event.Data.FD := Server_Sock;
 
    Return_Value := Epoll.Control (EpollFD, Epoll.Epoll_Ctl_Add, To_C (Server_Sock), Event'Access);
@@ -114,7 +115,7 @@ begin
                Accept_Socket (Server_Sock, Client_Socket, Server_Addr);
                Control_Socket (Client_Socket, Socket_Request);
 
-               Event.Events := Epoll.Epoll_In_And_Et;
+               Event.Events := Epoll.EPOLLIN or Epoll.EPOLLET;
                Event.Data.FD := Client_Socket;
 
                Return_Value := Epoll.Control (EpollFD,
