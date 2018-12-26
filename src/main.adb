@@ -23,26 +23,13 @@ with Ada.Command_Line;
 
 procedure Main is
    use type Interfaces.Unsigned_32;
-   Server_Sock : Socket_Type;
+   Server_Sock, Client_Socket : Socket_Type;
    Server_Addr : Sock_Addr_Type;
 
    EpollFD     : Epoll.Epoll_Fd_Type;
    Event       : aliased Epoll.Event_Type;
    Events      : Epoll.Event_Array_Type (1 .. 1);
    Return_Value, Descriptors : Integer;
-
-   -- Initialize the Sock_Addr_Type necessary to create the server's
-   -- socket bind
-   --
-   -- @param SA An uninitialized GNAT.Sockets.Sock_Addr_Type record
-   procedure Prepare_Address (SA : in out Sock_Addr_Type) is
-   begin
-      SA.Port := Port_Type (Mozzoni.Port);
-      SA.Addr := Inet_Addr (Mozzoni.Default_Bind);
-   end Prepare_Address;
-
-
-   Client_Socket : Socket_Type;
    Socket_Request : Request_Type := (Non_Blocking_IO, True);
    Should_Exit : Boolean := False;
 
@@ -67,12 +54,12 @@ procedure Main is
    end Standard_Input;
 
 begin
-
    Mozzoni.Command_Loader.Load;
 
    -- Initialize GNAT.Sockets
    Initialize;
-   Prepare_Address (Server_Addr);
+   Server_Addr.Port := Port_Type (Mozzoni.Port);
+   Server_Addr.Addr := Inet_Addr (Mozzoni.Default_Bind);
 
    Create_Socket (Server_Sock);
    Set_Socket_Option (Server_Sock, Socket_Level, (Reuse_Address, True));
