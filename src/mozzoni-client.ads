@@ -33,6 +33,8 @@ package Mozzoni.Client is
 
 
    procedure Register_Client (Socket : in Socket_Type);
+   procedure Deregister_Client (Socket : in Socket_Type);
+   procedure Dump_Status;
 
    function Client_For (Descriptor : in Integer) return Client_Type;
    function Client_For (Descriptor : in Socket_Type) return Client_Type;
@@ -62,5 +64,11 @@ package Mozzoni.Client is
      with Import,
      Link_Name => "write",
      Convention => C;
+
+   function Close_Socket (S : in Socket_Type) return Interfaces.C.int
+     with Import,
+       Link_Name => "close",
+       Convention => C;
+
 
 end Mozzoni.Client;

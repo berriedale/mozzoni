@@ -197,6 +197,19 @@ package body Mozzoni.Client is
       Maps.Insert (Directory, Client.Descriptor, Client);
    end Register_Client;
 
+   procedure Deregister_Client (Socket : in Socket_Type) is
+      Client : constant Client_Type := Client_For (Socket);
+   begin
+      Close_Socket (Socket);
+      Maps.Delete (Directory, Client.Descriptor);
+   end Deregister_Client;
+
+   procedure Dump_Status is
+   begin
+      Log.Log_Message (Alog.Info, "Dumping client statuses");
+      Log.Log_Message (Alog.Info,
+                       Integer (Maps.Length (Directory))'Image);
+   end Dump_Status;
 
    function Client_For (Descriptor : in Integer) return Client_Type is
    begin
