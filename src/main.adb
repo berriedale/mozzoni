@@ -79,7 +79,7 @@ begin
       return;
    end if;
 
-   Event.Events := Epoll.EPOLLIN or Epoll.EPOLLET;
+   Event.Events := Epoll.EPOLLIN or Epoll.EPOLLET or Epoll.EPOLLRDHUP;
    Event.Data.FD := Server_Sock;
 
    Return_Value := Epoll.Control (EpollFD, Epoll.Epoll_Ctl_Add, To_C (Server_Sock), Event'Access);
@@ -106,7 +106,7 @@ begin
             Polled_Event : Epoll.Event_Type := Events (Integer (Index));
 
             Disconnecting : constant Boolean :=
-                              (Polled_Event.Events and Epoll.EPOLLHUP) > 0;
+                              (Polled_Event.Events and (Epoll.EPOLLHUP or Epoll.EPOLLRDHUP)) > 0;
          begin
 
             if Polled_Event.Data.FD = Server_Sock then
@@ -115,7 +115,7 @@ begin
                Accept_Socket (Server_Sock, Client_Socket, Server_Addr);
                Control_Socket (Client_Socket, Socket_Request);
 
-               Event.Events := Epoll.EPOLLIN or Epoll.EPOLLET;
+               Event.Events := Epoll.EPOLLIN or Epoll.EPOLLET or Epoll.EPOLLRDHUP;
                Event.Data.FD := Client_Socket;
 
                Return_Value := Epoll.Control (EpollFD,
