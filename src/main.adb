@@ -99,11 +99,18 @@ begin
                                  Events'Length,
                                  100);
 
+
+
       for Index in 1 .. Descriptors loop
          declare
             Polled_Event : Epoll.Event_Type := Events (Integer (Index));
+
+            Disconnecting : constant Boolean :=
+                              (Polled_Event.Events and Epoll.EPOLLHUP) > 0;
          begin
+
             if Polled_Event.Data.FD = Server_Sock then
+
                -- Accept the new connection
                Accept_Socket (Server_Sock, Client_Socket, Server_Addr);
                Control_Socket (Client_Socket, Socket_Request);
@@ -123,7 +130,21 @@ begin
                   Log.Log_Message (Alog.Info, "accepted..." & Integer'Image (To_C (Client_Socket)));
                end if;
 
-            else
+            elsif Disconnecting then
+               Return_Value := Epoll.Control (EpollFD,
+                                              Epoll.Epoll_Ctl_Del,
+                                              To_C (Polled_Event.Data.FD),
+                                              null);
+
+               if Return_Value > 0 then
+                  Log.Log_Message (Alog.Error,
+                                   "A failure occurred trying to remove the descriptor from epoll(7)");
+               end if;
+
+               Mozzoni.Client.Deregister_Client (Polled_Event.Data.FD);
+
+            elsif (Polled_Event.Events and Epoll.EPOLLIN) > 0 then
+
                declare
                   Client : Mozzoni.Client.Client_Type := Mozzoni.Client.Client_For (Polled_Event.Data.FD);
                begin
@@ -134,9 +155,11 @@ begin
                      raise;
                end;
 
+            else
+               Log.Log_Message (Alog.Error,
+                                "Unhandled event type from the event loop:" & Polled_Event.Events'Img);
             end if;
          end;
       end loop;
    end loop;
-
 end Main;
