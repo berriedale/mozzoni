@@ -126,11 +126,18 @@ package body Mozzoni.Client is
 
       loop
          Bytes_Read := Integer (Read_Socket (Socket, Buffer'Address, Read_Buffer_Size));
-         if Mozzoni.Error_Number /= 0 and Mozzoni.Error_Number /= 22 then
+         exit when Bytes_Read = 0;
+
+
+
+         if Mozzoni.Error_Number /= 0
+           -- EINVAL consistently happens but I'm not sure if it is _actually_ an error
+           and Mozzoni.Error_Number /= 22
+           -- EINTR means there has been a signal, we can just retry the call
+           and Mozzoni.Error_Number /= 4 then
             Mozzoni.Log.Log_Message (Alog.Error, "Errno set while reading socket:" & Integer'Image (Mozzoni.Error_Number));
          end if;
 
-         exit when Bytes_Read = 0;
 
          -- Nothing went wrong, which means we've got a buffer to work
          Append (Client.Buffer, Buffer (1 .. Bytes_Read));
