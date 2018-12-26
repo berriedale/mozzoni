@@ -41,16 +41,22 @@ procedure Main is
 
       Ch : Character;
    begin
-      Log.Log_Message (Alog.Info, "Waiting..");
+      Log.Log_Message (Alog.Info, ">> Press 'q' at any time to exit..");
 
       while Should_Exit = False loop
          Get (Ch);
-         if Ch = 'q' then
-            Log.Log_Message (Alog.Info, "Should exit");
-            Should_Exit := True;
-         end if;
-      end loop;
+         case Ch is
+            when 'q' =>
+               Should_Exit := True;
 
+            when 's' =>
+
+               Mozzoni.Client.Dump_Status;
+
+            when others => null;
+         end case;
+
+      end loop;
    end Standard_Input;
 
 begin
