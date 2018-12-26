@@ -131,6 +131,7 @@ begin
                end if;
 
             elsif Disconnecting then
+               Log.Log_Message (Alog.Info, "Disconnecting");
                Return_Value := Epoll.Control (EpollFD,
                                               Epoll.Epoll_Ctl_Del,
                                               To_C (Polled_Event.Data.FD),

@@ -126,9 +126,8 @@ package body Mozzoni.Client is
 
       loop
          Bytes_Read := Integer (Read_Socket (Socket, Buffer'Address, Read_Buffer_Size));
+
          exit when Bytes_Read = 0;
-
-
 
          if Mozzoni.Error_Number /= 0
            -- EINVAL consistently happens but I'm not sure if it is _actually_ an error

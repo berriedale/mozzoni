@@ -7,7 +7,7 @@ with GNAT.Sockets; use GNAT.Sockets;
 
 package Mozzoni.Client is
 
-   Read_Buffer_Size : constant := 32;
+   Read_Buffer_Size : constant := 128;
 
    type Client_Type is tagged record
       Descriptor        : Integer;
