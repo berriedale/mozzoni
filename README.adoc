@@ -1,17 +1,45 @@
 = Mozzoni
 
-Mozzoni aims to be a fast and safe NoSQL data service.
-
-:toc:
-
-== About
+Mozzoni aims to be a fast and _safe_ NoSQL data service.
 
 Mozzoni is named after 
 link:https://en.wikipedia.org/wiki/Anna_Maria_Mozzoni[Anna Maria Mozzoni]
 an italian feminist and arguably the founder of the women's movement in Italy.
 
+:toc:
+
+== Hacking
+
+Mozzoni is built with Ada 2012, a modern and type-safe language. If you're
+unfamilar with the language refer to <<starting-ada>>. While developing Mozzoni
+can be done from the command line, much of its development happens using the
+link:https:/github.com/AdaCore/gps[GNAT Programming Studio].
+
+Many of the tasks for building, testing, etc, are driven through the
+`Makefile`. Execute `make` to print out the available targets and their help
+information.
+
+**Building**: `make build`
+
+**Verifying**: `make check`
+
+While `make check` runs all the tests available, two other targets can be used
+for more granular testing. `make unit` will run the GNATtest cases. `make
+acceptance` will run the Python-based black-box acceptance tests which verify
+the client-facing behavior of Mozzoni.
+
+
 
 == Benchmarking
+
+Mozzoni uses the `redis-benchmark` tool to verify it's compatibilty and
+relative performance to `redis-server`. The tool is available in the
+`redis-tools` package for Debian, or can be quickly built from source by cloning
+link:https://github.com/antirez/redis[the redis source code].
+
+
+Below are some results which are manually kept up to date and may not represent
+the latest performance of Mozzoni.
 
 === `SET`
 
@@ -105,3 +133,13 @@ an italian feminist and arguably the founder of the women's movement in Italy.
 100.00% <= 1 milliseconds
 143472.02 requests per second
 ----
+
+
+[[starting-ada]]
+== Getting Started with Ada
+
+The easiest way to get started with Ada, is to download the entire toolchain
+from link:https://libre.adacore.com/[libre.adacore.com], including the compiler
+and GNAT Programming Studio.
+
+Debian users should be able to install the `gnat-8` and `gprbuild` packages.
