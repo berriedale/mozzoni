@@ -132,7 +132,9 @@ package body Mozzoni.Client is
          if Mozzoni.Error_Number /= 0
            -- EINVAL consistently happens but I'm not sure if it is _actually_ an error
            and Mozzoni.Error_Number /= 22
-           -- EINTR means there has been a signal, we can just retry the call
+         -- EINTR means there has been a signal, we can just retry the call.
+         -- This will happen regularly when profiling, since a SIGPROF will be dispatched
+         -- to the process.
            and Mozzoni.Error_Number /= 4 then
             Mozzoni.Log.Log_Message (Alog.Error, "Errno set while reading socket:" & Integer'Image (Mozzoni.Error_Number));
          end if;
