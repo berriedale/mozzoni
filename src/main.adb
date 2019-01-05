@@ -146,6 +146,24 @@ begin
                Mozzoni.Client.Register_Client (Client_Socket);
                Log.Log_Message (Alog.Info, "accepted..." & Integer'Image (To_C (Client_Socket)));
 
+            elsif (Polled_Event.Events and Epoll.EPOLLIN) > 0 then
+
+               declare
+                  S : constant Socket_Type := To_Ada (Polled_Event.Data.FD);
+                  Client : Mozzoni.Client.Client_Type := Mozzoni.Client.Client_For (S);
+               begin
+                  CLient.Read_Available (S);
+
+                  if Disconnecting then
+                     Mozzoni.Client.Deregister_Client (S);
+                  end if;
+
+               exception
+                  when Err : others =>
+                     Log.Log_Message (Alog.Error, Ada.Exceptions.Exception_Message (Err));
+                     raise;
+               end;
+
             elsif Disconnecting then
                Log.Log_Message (Alog.Info, "Disconnecting" & Integer'Image (Polled_Event.Data.FD));
                Return_Value := Epoll.Control (EpollFD,
@@ -159,18 +177,6 @@ begin
                end if;
 
                Mozzoni.Client.Deregister_Client (To_Ada (Polled_Event.Data.FD));
-
-            elsif (Polled_Event.Events and Epoll.EPOLLIN) > 0 then
-
-               declare
-                  Client : Mozzoni.Client.Client_Type := Mozzoni.Client.Client_For (Polled_Event.Data.FD);
-               begin
-                  CLient.Read_Available (To_Ada (Polled_Event.Data.FD));
-               exception
-                  when Err : others =>
-                     Log.Log_Message (Alog.Error, Ada.Exceptions.Exception_Message (Err));
-                     raise;
-               end;
 
             else
                Log.Log_Message (Alog.Error,

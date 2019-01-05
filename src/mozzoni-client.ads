@@ -31,9 +31,24 @@ package Mozzoni.Client is
                     Number : in Natural);
    function Is_Valid (Client : in Client_Type) return Boolean;
 
+   -- Determine whether a Client is registered
+   --
+   -- @param Descriptor A valid Socket_Type
+   -- @return True when the Descriptor has already be registered.
+   function Has_Client (Descriptor : in Socket_Type) return Boolean;
+
 
    procedure Register_Client (Socket : in Socket_Type);
-   procedure Deregister_Client (Socket : in Socket_Type);
+
+   -- Remove a Client by its specified socket.
+   --
+   -- @param Socket A valid, and already registered Socket_Type
+   procedure Deregister_Client (Socket : in Socket_Type)
+     with Pre => Has_Client (Socket),
+     Post => not Has_Client (Socket);
+
+   -- Dump_Status will output some potentially useful information to the log
+   -- about the current state of the registered Clients
    procedure Dump_Status;
 
    function Client_For (Descriptor : in Integer) return Client_Type;
@@ -51,7 +66,7 @@ package Mozzoni.Client is
 
 
 
-   function Read_Socket (S      : in GNAT.Sockets.Socket_Type;
+   function Read_Socket (S      : in Socket_Type;
                          Buffer : in System.Address;
                          Count  : Interfaces.C.size_t) return Interfaces.C.size_t
      with Import,
@@ -65,7 +80,7 @@ package Mozzoni.Client is
      Link_Name => "write",
      Convention => C;
 
-   function Close_Socket (S : in Socket_Type) return Interfaces.C.int
+   function Close_Socket (S : in Socket_Type) return Integer
      with Import,
        Link_Name => "close",
        Convention => C;

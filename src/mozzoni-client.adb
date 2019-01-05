@@ -127,8 +127,13 @@ package body Mozzoni.Client is
       loop
          Bytes_Read := Integer (Read_Socket (Socket, Buffer'Address, Read_Buffer_Size));
 
+         -- If zero bytes have been read, that means that either the socket is
+         -- exhausted or it may be waiting for more bytes to arrive on the wire.
+         -- either way, the appropriate behavior is to stop reading, and start
+         -- processing what we have.
          exit when Bytes_Read = 0;
 
+         -- Non-zero returns may carry an errno which should be considered.
          if Mozzoni.Error_Number /= 0
            -- EINVAL consistently happens but I'm not sure if it is _actually_ an error
            and Mozzoni.Error_Number /= 22
@@ -148,6 +153,10 @@ package body Mozzoni.Client is
          exit when Bytes_Read < Buffer'Length;
       end loop;
 
+      -- A zero-length Client.Buffer will occur when a read has occurred once
+      -- the socket is shutting down. This is a normal behavior, but the caller
+      -- must attempt to shut down the socket after the read has completed in order
+      -- to avoid an infinite loop.
       if Length (Client.Buffer) > 0 then
          Parse_Available (Client);
       end if;
@@ -190,6 +199,12 @@ package body Mozzoni.Client is
    end Is_Valid;
 
 
+   function Has_Client (Descriptor : in Socket_Type) return Boolean is
+   begin
+      return Maps.Contains (Directory, To_C (Descriptor));
+   end Has_Client;
+
+
    function Hash_Descriptor (D : in Integer) return Hash_Type is
    begin
       return Hash_Type (D);
@@ -208,9 +223,14 @@ package body Mozzoni.Client is
    procedure Deregister_Client (Socket : in Socket_Type) is
       Client : constant Client_Type := Client_For (Socket);
    begin
-      Close_Socket (Socket);
+      if Close_Socket (Socket) /= 0 then
+         Log.Log_Message (Alog.Error,
+                          "Failed to close socket with " & Integer'Image (Mozzoni.Error_Number));
+      end if;
+
       Maps.Delete (Directory, Client.Descriptor);
    end Deregister_Client;
+
 
    procedure Dump_Status is
    begin
