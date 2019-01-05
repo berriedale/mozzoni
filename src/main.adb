@@ -69,7 +69,7 @@ procedure Main is
 
 
    begin
-      Event.Events := Epoll.EPOLLIN or Epoll.EPOLLET or Epoll.EPOLLRDHUP;
+      Event.Events := Epoll.EPOLLIN or Epoll.EPOLLRDHUP;
       Event.Data.FD := Socket;
 
       Call_Status := Epoll.Control (efd,
@@ -106,7 +106,7 @@ begin
       return;
    end if;
 
-   Server_Event.Events := Epoll.EPOLLIN or Epoll.EPOLLET or Epoll.EPOLLOUT or Epoll.EPOLLRDHUP;
+   Server_Event.Events := Epoll.EPOLLIN or Epoll.EPOLLRDHUP;
    Server_Event.Data.FD := To_C (Server_Sock);
 
    Return_Value := Epoll.Control (EpollFD, Epoll.Epoll_Ctl_Add, To_C (Server_Sock), Server_Event'Access);
