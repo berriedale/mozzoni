@@ -147,7 +147,7 @@ begin
                Log.Log_Message (Alog.Info, "accepted..." & Integer'Image (To_C (Client_Socket)));
 
             elsif Disconnecting then
-               Log.Log_Message (Alog.Info, "Disconnecting");
+               Log.Log_Message (Alog.Info, "Disconnecting" & Integer'Image (Polled_Event.Data.FD));
                Return_Value := Epoll.Control (EpollFD,
                                               Epoll.Epoll_Ctl_Del,
                                               Polled_Event.Data.FD,
