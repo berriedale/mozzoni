@@ -36,25 +36,26 @@ package Epoll is
             when 0 =>
                 Ptr : System.Address;
             when 1 =>
-                FD  : aliased GNAT.Sockets.Socket_Type; -- Interfaces.C.int
+                FD  : Epoll_Fd_Type;
             when 2 =>
-                U32 : aliased Interfaces.Unsigned_32;
+                U32 : Interfaces.Unsigned_32;
             when others =>
-                U64 : aliased Interfaces.Unsigned_64;
+                U64 : Interfaces.Unsigned_64;
         end case;
    end record
      with Unchecked_Union,
-       Convention => C_Pass_By_Copy;
+     Convention => C;
+
 
    type Event_Type is record
-      Events : aliased Interfaces.Unsigned_32;
+      Events : Interfaces.Unsigned_32;
       Data   : Data_Type;
    end record
-     with Convention => C_Pass_By_Copy;
+     with Convention => C,
+       Pack;
 
    type Event_Array_Type is array (Integer range <>) of aliased Event_Type
      with Convention => C;
-
 
    function Create (Size : Integer) return Epoll_Fd_Type
      with Import,
