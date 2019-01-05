@@ -7,6 +7,11 @@ with Mozzoni.Store; use Mozzoni.Store;
 
 package body Mozzoni.Commands.Keys is
 
+   use Ada.Characters.Latin_1;
+
+   OK_Response : constant String := "+OK" & CR & LF;
+   Null_Response : constant String := "$-1" & CR & LF;
+
    -- Set a given value to the specified cache key
    --
    -- The positionals should be:
@@ -74,24 +79,23 @@ package body Mozzoni.Commands.Keys is
 
       if Options.If_Not_Exists and Exists then
          -- Return a bulk string null response if we cannot set this value
-         Client.Write (Prepare_Response ("$-1"));
+         Client.Write (Null_Response);
          return;
       end if;
 
       if Options.If_Exists and not Exists then
          -- Return a bulk string null response if we cannot set this value
-         Client.Write (Prepare_Response ("$-1"));
+         Client.Write (Null_Response);
          return;
       end if;
 
       KeyValue.Set (Key_Item.Value, Value_Item);
-      Client.Write (Prepare_Response ("+OK"));
+      Client.Write (OK_Response);
    end Handle_Set;
 
 
    procedure Handle_Get (Client : in out Client_Type;
                          Command : Command_Array_Access) is
-      use Ada.Characters.Latin_1;
 
       Key_Item : Command_Item := Command (2);
       Key : constant Unbounded_String := Key_Item.Value;

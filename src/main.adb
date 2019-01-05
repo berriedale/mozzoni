@@ -144,7 +144,6 @@ begin
 
                Add_To_Epoll (EpollFD, Client_Socket);
                Mozzoni.Client.Register_Client (Client_Socket);
-               Log.Log_Message (Alog.Info, "accepted..." & Integer'Image (To_C (Client_Socket)));
 
             elsif (Polled_Event.Events and Epoll.EPOLLIN) > 0 then
 
@@ -165,7 +164,6 @@ begin
                end;
 
             elsif Disconnecting then
-               Log.Log_Message (Alog.Info, "Disconnecting" & Integer'Image (Polled_Event.Data.FD));
                Return_Value := Epoll.Control (EpollFD,
                                               Epoll.Epoll_Ctl_Del,
                                               Polled_Event.Data.FD,
