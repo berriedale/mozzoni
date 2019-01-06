@@ -22,10 +22,7 @@ acceptance: build ## Run the Python-based acceptance tests (see acceptance/)
 clean: ## Remove all temporary files not tracked by Git
 	git clean -xf
 
-prepare-test-harness: ## Compile the GNATtest test harness
-	if [ ! -d $(GNATTEST_HARNESS_DIR) ]; then \
-		$(MAKE) regenerate-test-harness; \
-	fi;
+prepare-test-harness: regenerate-test-harness ## Compile the GNATtest test harness
 	(cd $(GNATTEST_HARNESS_DIR) && gprbuild -Ptest_driver.gpr $(GPRFLAGS) )
 
 regenerate-test-harness: ## Regenerate the GNATtest test harness from the sources
