@@ -15,6 +15,13 @@ unfamilar with the language refer to <<starting-ada>>. While developing Mozzoni
 can be done from the command line, much of its development happens using the
 link:https:/github.com/AdaCore/gps[GNAT Programming Studio].
 
+To get started clone the repository with:
+
+[source,sh]
+----
+git clone --recursive https://git.brokenco.de/rtyler/mozzoni.git
+----
+
 Many of the tasks for building, testing, etc, are driven through the
 `Makefile`. Execute `make` to print out the available targets and their help
 information.
