@@ -13,4 +13,8 @@ package Mozzoni.Commands.Keys is
                          Command : Command_Array_Access)
      with Pre => Client.Is_Valid and Command /= null;
 
+   procedure Handle_Exists (Client : in out Client_Type;
+                            Command : Command_Array_Access)
+     with Pre => Client.Is_Valid and Command /= null;
+
 end Mozzoni.Commands.Keys;

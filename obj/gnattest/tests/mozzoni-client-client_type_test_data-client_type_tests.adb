@@ -33,7 +33,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    end Lookup_Invalid_Client_Int;
 
    procedure Lookup_Invalid_Client_Socket is
-      S : GNAT.Sockets.Socket_Type;
+      S : Socket_Type := No_Socket;
       C : constant Client_Type := Client_For (S);
    begin
       null;
@@ -143,11 +143,31 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
 
 
 --  begin read only
+   procedure Test_Write_Line_Ending (Gnattest_T : in out Test_Client_Type);
+   procedure Test_Write_Line_Ending_579bd3 (Gnattest_T : in out Test_Client_Type) renames Test_Write_Line_Ending;
+--  id:2.2/579bd35a577c3831/Write_Line_Ending/1/0/
+   procedure Test_Write_Line_Ending (Gnattest_T : in out Test_Client_Type) is
+   --  mozzoni-client.ads:60:4:Write_Line_Ending
+--  end read only
+
+      pragma Unreferenced (Gnattest_T);
+
+   begin
+
+      -- no-op test case since we're just invoking underlying stream functionality
+      null;
+
+--  begin read only
+   end Test_Write_Line_Ending;
+--  end read only
+
+
+--  begin read only
    procedure Test_1_Client_For (Gnattest_T : in out Test_Client_Type);
    procedure Test_Client_For_bc4703 (Gnattest_T : in out Test_Client_Type) renames Test_1_Client_For;
 --  id:2.2/bc4703174166b521/Client_For/1/0/
    procedure Test_1_Client_For (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:86:4:Client_For
+   --  mozzoni-client.ads:89:4:Client_For
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -166,7 +186,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Client_For_280f2c (Gnattest_T : in out Test_Client_Type) renames Test_2_Client_For;
 --  id:2.2/280f2c7eee8955be/Client_For/0/0/
    procedure Test_2_Client_For (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:93:4:Client_For
+   --  mozzoni-client.ads:96:4:Client_For
 --  end read only
 
       pragma Unreferenced (Gnattest_T);

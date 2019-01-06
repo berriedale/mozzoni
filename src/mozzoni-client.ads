@@ -56,6 +56,9 @@ package Mozzoni.Client is
    procedure Write (Client : in out Client_Type;
                     Number : in Natural);
 
+   -- Write the CRLF line ending to the socket
+   procedure Write_Line_Ending (Client : in out Client_Type);
+
    -- Determine whether a Client is registered
    --
    -- @param Descriptor A valid Socket_Type

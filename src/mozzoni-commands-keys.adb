@@ -117,4 +117,25 @@ package body Mozzoni.Commands.Keys is
 
    end Handle_Get;
 
+
+   procedure Handle_Exists (Client  : in out Client_Type;
+                            Command : Command_Array_Access) is
+
+      Key_Item : Command_Item := Command (2);
+      Key : constant Unbounded_String := Key_Item.Value;
+
+      Found : Natural := 0;
+   begin
+      for Key_Item of Command (2 .. Command'Length) loop
+         if KeyValue.Exists (Key_Item.Value) then
+            Found := Found + 1;
+         end if;
+      end loop;
+
+      Client.Write (':');
+      Client.Write (Found);
+      Client.Write_Line_Ending;
+   end Handle_Exists;
+
+
 end Mozzoni.Commands.Keys;

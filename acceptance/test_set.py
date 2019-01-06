@@ -4,6 +4,7 @@ import helpers
 import random
 import time
 import sys
+import unittest
 
 class SetTest(helpers.MozzoniTest):
     def setUp(self):

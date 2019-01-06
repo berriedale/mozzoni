@@ -68,6 +68,26 @@ package body Mozzoni.Commands.Keys.Test_Data.Tests is
    end Test_Handle_Get;
 --  end read only
 
+
+--  begin read only
+   procedure Test_Handle_Exists (Gnattest_T : in out Test);
+   procedure Test_Handle_Exists_0ba645 (Gnattest_T : in out Test) renames Test_Handle_Exists;
+--  id:2.2/0ba645b93df33c46/Handle_Exists/1/0/
+   procedure Test_Handle_Exists (Gnattest_T : in out Test) is
+   --  mozzoni-commands-keys.ads:16:4:Handle_Exists
+--  end read only
+
+      pragma Unreferenced (Gnattest_T);
+
+   begin
+
+      -- covered more effectively by acceptance tests at the moment
+      null;
+
+--  begin read only
+   end Test_Handle_Exists;
+--  end read only
+
 --  begin read only
 --  id:2.2/02/
 --

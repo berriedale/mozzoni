@@ -82,6 +82,13 @@ package body Mozzoni.Client is
    end Write;
 
 
+   procedure Write_Line_Ending (Client : in out Client_Type) is
+      use Ada.Characters.Latin_1;
+   begin
+      Client.Write (Terminator);
+   end Write_Line_Ending;
+
+
    -- TODO: Describe something more useful for validating the state of the given Client
    function Is_Valid (Client : in Client_Type) return Boolean is
    begin
