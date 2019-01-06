@@ -21,6 +21,19 @@ package body Mozzoni.Store is
       end Exists;
 
 
+      function Remove (Key : in Key_Type) return Boolean is
+      -- Need a variable since Delete is an `in out` operation
+         KV : Hashed_Maps.Map := Store;
+      begin
+         if not Hashed_Maps.Contains (KV, Key) then
+            return False;
+         end if;
+
+         Hashed_Maps.Delete (KV, Key);
+         return True;
+      end Remove;
+
+
       function Is_Expired (Key : in Key_Type) return Boolean is
          Value : constant Value_Type := Hashed_Maps.Element (Store, Key);
          Now   : constant Ada.Calendar.Time := Ada.Calendar.Clock;

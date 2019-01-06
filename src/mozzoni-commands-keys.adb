@@ -138,4 +138,21 @@ package body Mozzoni.Commands.Keys is
    end Handle_Exists;
 
 
+   procedure Handle_Del (Client : in out Client_Type;
+                         Command : Command_Array_Access) is
+
+      Deleted : Natural := 0;
+   begin
+      for Key_Item of Command (2 .. Command'Length) loop
+         if KeyValue.Remove (Key_Item.Value) then
+            Deleted := Deleted + 1;
+         end if;
+      end loop;
+
+      Client.Write (':');
+      Client.Write (Deleted);
+      Client.Write_Line_Ending;
+   end Handle_Del;
+
+
 end Mozzoni.Commands.Keys;

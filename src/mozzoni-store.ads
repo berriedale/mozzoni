@@ -56,6 +56,17 @@ package Mozzoni.Store is
       function Exists (Key : in Key_Type) return Boolean
         with Pre => Mozzoni.Store.Is_Valid_Key (Key);
 
+      -- Remove a Key from the store
+      --
+      -- To avoid too many traversals of the protected object boundary, this
+      -- function will return a Boolean to indicate to the caller that the key
+      -- existed before it was purged.
+      --
+      -- @param Key a valid key
+      -- @return Boolean True if the key existed, otherwise false.
+      function Remove (Key : in Key_Type) return Boolean
+        with Pre => Mozzoni.Store.Is_Valid_Key (Key);
+
       ---
       -- Is_Expired determines whether the given key has expired from the store
       --
