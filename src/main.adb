@@ -5,7 +5,7 @@ with Ada.Command_Line;
 with Ada.Exceptions;
 with Ada.Streams;
 with Ada.Text_IO;
-with Epoll;
+with Async.Raw.Epoll;
 with Interfaces.C;
 
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
@@ -19,13 +19,15 @@ with Mozzoni.Dispatch; use Mozzoni.Dispatch;
 
 
 procedure Main is
+   use Async.Raw.Epoll;
+
    use type Interfaces.Unsigned_32;
    Server_Sock : Socket_Type;
    Server_Addr : Sock_Addr_Type;
 
-   EpollFD     : Epoll.Epoll_Fd_Type;
-   Server_Event       : aliased Epoll.Event_Type;
-   Events      : Epoll.Event_Array_Type (1 .. 32);
+   EpollFD     : Epoll_Fd_Type;
+   Server_Event       :  aliased Event_Type;
+   Events      : Event_Array_Type (1 .. 32);
    Return_Value, Descriptors : Integer;
    Socket_Request : Request_Type := (Non_Blocking_IO, True);
    Should_Exit : Boolean := False;
@@ -56,10 +58,10 @@ procedure Main is
       end loop;
    end Standard_Input;
 
-   procedure Add_To_Epoll (efd : Epoll.Epoll_Fd_Type;
+   procedure Add_To_Epoll (efd : Epoll_Fd_Type;
                            Client_Socket : in Socket_Type) is
 
-      Event       : aliased Epoll.Event_Type;
+      Event       : aliased Event_Type;
       Call_Status : Integer;
       Socket : constant Integer := To_C (Client_Socket);
 
@@ -67,11 +69,11 @@ procedure Main is
 
 
    begin
-      Event.Events := Epoll.EPOLLIN or Epoll.EPOLLRDHUP;
+      Event.Events := EPOLLIN or EPOLLRDHUP;
       Event.Data.FD := Socket;
 
-      Call_Status := Epoll.Control (efd,
-                                    Epoll.Epoll_Ctl_Add,
+      Call_Status := Control (efd,
+                                    Epoll_Ctl_Add,
                                     Socket,
                                     Event'Access);
 
@@ -97,17 +99,17 @@ begin
    Listen_Socket (Server_Sock);
 
    -- Since Linux 2.6.8, the size argument is ignored, but must be greater than zero;
-   EpollFD := Epoll.Create (1);
+   EpollFD := Create (1);
 
    if EpollFD = -1 then
       Log.Error ("Failed to create epoll(7) file descriptor");
       return;
    end if;
 
-   Server_Event.Events := Epoll.EPOLLIN or Epoll.EPOLLRDHUP;
+   Server_Event.Events := EPOLLIN or EPOLLRDHUP;
    Server_Event.Data.FD := To_C (Server_Sock);
 
-   Return_Value := Epoll.Control (EpollFD, Epoll.Epoll_Ctl_Add, To_C (Server_Sock), Server_Event'Access);
+   Return_Value := Control (EpollFD, Epoll_Ctl_Add, To_C (Server_Sock), Server_Event'Access);
 
    Log.Info ("mozzoni-daemon online and ready for work..");
    Log.Debug ("Epoll descriptor: {1}", (1 => Log.d (EpollFD)));
@@ -119,7 +121,7 @@ begin
       end if;
 
       Descriptors := 0;
-      Descriptors := Epoll.Wait (EpollFD,
+      Descriptors := Wait (EpollFD,
                                  Events,
                                  Events'Length,
                                  100);
@@ -127,10 +129,10 @@ begin
 
       for Index in 1 .. Descriptors loop
          declare
-            Polled_Event : Epoll.Event_Type := Events (Integer (Index));
+            Polled_Event : Event_Type := Events (Integer (Index));
 
             Disconnecting : constant Boolean :=
-                              (Polled_Event.Events and (Epoll.EPOLLHUP or Epoll.EPOLLRDHUP)) > 0;
+                              (Polled_Event.Events and (EPOLLHUP or EPOLLRDHUP)) > 0;
             Client_Socket : Socket_Type;
          begin
 
@@ -144,7 +146,7 @@ begin
                Mozzoni.Client.Register_Client (Client_Socket);
                Log.Debug ("Accepting a connection on fd {1}", (1 => Log.d (To_C (Client_Socket))));
 
-            elsif (Polled_Event.Events and Epoll.EPOLLIN) > 0 then
+            elsif (Polled_Event.Events and EPOLLIN) > 0 then
 
                declare
                   S : constant Socket_Type := To_Ada (Polled_Event.Data.FD);
@@ -164,8 +166,8 @@ begin
                end;
 
             elsif Disconnecting then
-               Return_Value := Epoll.Control (EpollFD,
-                                              Epoll.Epoll_Ctl_Del,
+               Return_Value := Control (EpollFD,
+                                              Epoll_Ctl_Del,
                                               Polled_Event.Data.FD,
                                               null);
 

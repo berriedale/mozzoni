@@ -1,3 +1,4 @@
+with "contrib/async-ada/async.gpr";
 with "contrib/logga/logga.gpr";
 
 project Mozzoni is

@@ -1,3 +1,6 @@
 [submodule "contrib/logga"]
 	path = contrib/logga
 	url = https://git.brokenco.de/berriedale/logga.git
+[submodule "contrib/async-ada"]
+	path = contrib/async-ada
+	url = https://git.brokenco.de/berriedale/async-ada.git
