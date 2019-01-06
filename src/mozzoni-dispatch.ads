@@ -12,6 +12,9 @@ package Mozzoni.Dispatch is
    type Dispatchable_Type is not null access procedure (C  : in out Client_Type;
                                                         CA : in Command_Array_Access);
 
+   function Is_Registered (Name : in String) return Boolean
+     with Pre => Name'Length > 0;
+
    procedure Dispatch_Command (Client         : in out Client_Type;
                                Command_Access : in Command_Array_Access)
      with Pre =>
@@ -20,7 +23,8 @@ package Mozzoni.Dispatch is
 
    procedure Register_Command (Name : in String;
                                Handler : in Dispatchable_Type)
-     with Pre => Name'Length > 0;
+     with Pre => Name'Length > 0,
+       Post => Is_Registered (Name);
 
 
 end Mozzoni.Dispatch;

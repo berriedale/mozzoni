@@ -14,6 +14,12 @@ package body Mozzoni.Dispatch is
    Available : Dispatches.Map;
 
 
+   function Is_Registered (Name : in String) return Boolean is
+   begin
+      return Dispatches.Contains (Available, To_Unbounded_String (Name));
+   end Is_Registered;
+
+
    procedure Register_Command (Name    : in String;
                                Handler : in Dispatchable_Type) is
 
@@ -26,17 +32,10 @@ package body Mozzoni.Dispatch is
                                Command_Access : in Command_Array_Access) is
       Command : constant Command_Array := Command_Access.all;
       Command_Name : constant Unbounded_String := Command (1).Value;
+      Handler      : constant Dispatchable_Type := Dispatches.Element (Available, Command_Name);
    begin
 
-      if Dispatches.Contains (Available, Command_Name) then
-         declare
-            Handler : constant Dispatchable_Type := Dispatches.Element (Available, Command_Name);
-         begin
-            Handler (Client, Command_Access);
-         end;
-      else
-         Log.Error ("Could not find a suitable handler for {1}", (1 => Command_Name));
-      end if;
+      Handler (Client, Command_Access);
 
    end Dispatch_Command;
 
