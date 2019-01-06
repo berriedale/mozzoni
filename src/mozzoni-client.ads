@@ -127,8 +127,8 @@ private
 
    function Close_Socket (S : in Socket_Type) return Integer
      with Import,
-       Link_Name => "close",
-       Convention => C;
+     Link_Name => "close",
+     Convention => C;
 
    -- This procedure is only intended to be invoked in tests. It will destroy
    -- *ALL* state for currently registered clients;

@@ -52,7 +52,7 @@ package Mozzoni.Store is
    -- KeyValue is a protected object which manages proper task-safe access to
    -- the internal key/value storage in Mozzoni
    protected KeyValue is
-      -- Checks whether the given key exists in the key/value store
+   -- Checks whether the given key exists in the key/value store
       function Exists (Key : in Key_Type) return Boolean
         with Pre => Mozzoni.Store.Is_Valid_Key (Key);
 
@@ -71,7 +71,7 @@ package Mozzoni.Store is
       -- @param Value a properly formed Value_Type
       ----
       procedure Set (Key   : in Key_Type;
-                    Value : in Value_Type)
+                     Value : in Value_Type)
         with Pre => Mozzoni.Store.Is_Valid_Key (Key);
 
       ---

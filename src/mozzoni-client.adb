@@ -23,7 +23,7 @@ package body Mozzoni.Client is
 
          -- Non-zero returns may carry an errno which should be considered.
          if Mozzoni.Error_Number /= 0
-           -- EINVAL consistently happens but I'm not sure if it is _actually_ an error
+         -- EINVAL consistently happens but I'm not sure if it is _actually_ an error
            and Mozzoni.Error_Number /= 22
          -- EINTR means there has been a signal, we can just retry the call.
          -- This will happen regularly when profiling, since a SIGPROF will be dispatched
@@ -60,7 +60,7 @@ package body Mozzoni.Client is
 
 
    procedure Write (Client    : in out Client_Type;
-                    Char : in Character) is
+                    Char      : in Character) is
    begin
       Character'Write (Client.Stream, Char);
    end Write;
@@ -68,7 +68,7 @@ package body Mozzoni.Client is
 
    procedure Write (Client : in out Client_Type;
                     Number : in Natural) is
-      -- Convert to a string for writing to the socket
+   -- Convert to a string for writing to the socket
       As_String : String := Natural'Image (Number);
    begin
       -- BUG: This doesn't seem to write anything to the stream, so we need

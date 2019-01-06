@@ -21,10 +21,10 @@ package Mozzoni.Dispatch is
        (Client.Descriptor >= 0
         and Command_Access /= null);
 
-   procedure Register_Command (Name : in String;
+   procedure Register_Command (Name    : in String;
                                Handler : in Dispatchable_Type)
      with Pre => Name'Length > 0,
-       Post => Is_Registered (Name);
+     Post => Is_Registered (Name);
 
 
 end Mozzoni.Dispatch;

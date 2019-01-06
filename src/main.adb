@@ -25,12 +25,12 @@ procedure Main is
    Server_Sock : Socket_Type;
    Server_Addr : Sock_Addr_Type;
 
-   EpollFD     : Epoll_Fd_Type;
-   Server_Event       :  aliased Event_Type;
-   Events      : Event_Array_Type (1 .. 32);
+   EpollFD                   : Epoll_Fd_Type;
+   Server_Event              : aliased Event_Type;
+   Events                    : Event_Array_Type (1 .. 32);
    Return_Value, Descriptors : Integer;
-   Socket_Request : Request_Type := (Non_Blocking_IO, True);
-   Should_Exit : Boolean := False;
+   Socket_Request            : Request_Type := (Non_Blocking_IO, True);
+   Should_Exit               : Boolean := False;
 
    task Standard_Input;
 
@@ -58,12 +58,12 @@ procedure Main is
       end loop;
    end Standard_Input;
 
-   procedure Add_To_Epoll (efd : Epoll_Fd_Type;
+   procedure Add_To_Epoll (efd           : Epoll_Fd_Type;
                            Client_Socket : in Socket_Type) is
 
       Event       : aliased Event_Type;
       Call_Status : Integer;
-      Socket : constant Integer := To_C (Client_Socket);
+      Socket      : constant Integer := To_C (Client_Socket);
 
 
 
@@ -73,9 +73,9 @@ procedure Main is
       Event.Data.FD := Socket;
 
       Call_Status := Control (efd,
-                                    Epoll_Ctl_Add,
-                                    Socket,
-                                    Event'Access);
+                              Epoll_Ctl_Add,
+                              Socket,
+                              Event'Access);
 
       if Call_Status /= 0 then
          raise Constraint_Error with "Failed to add descriptor";
@@ -122,9 +122,9 @@ begin
 
       Descriptors := 0;
       Descriptors := Wait (EpollFD,
-                                 Events,
-                                 Events'Length,
-                                 100);
+                           Events,
+                           Events'Length,
+                           100);
 
 
       for Index in 1 .. Descriptors loop
@@ -149,7 +149,7 @@ begin
             elsif (Polled_Event.Events and EPOLLIN) > 0 then
 
                declare
-                  S : constant Socket_Type := To_Ada (Polled_Event.Data.FD);
+                  S      : constant Socket_Type := To_Ada (Polled_Event.Data.FD);
                   Client : Mozzoni.Client.Client_Type := Mozzoni.Client.Client_For (S);
                begin
                   Client.Read_Available;
@@ -167,9 +167,9 @@ begin
 
             elsif Disconnecting then
                Return_Value := Control (EpollFD,
-                                              Epoll_Ctl_Del,
-                                              Polled_Event.Data.FD,
-                                              null);
+                                        Epoll_Ctl_Del,
+                                        Polled_Event.Data.FD,
+                                        null);
 
                if Return_Value > 0 then
                   Log.Error ("A failure occurred trying to remove the descriptor from epoll(7)");

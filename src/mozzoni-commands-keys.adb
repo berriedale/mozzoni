@@ -9,7 +9,7 @@ package body Mozzoni.Commands.Keys is
 
    use Ada.Characters.Latin_1;
 
-   OK_Response : constant String := "+OK" & CR & LF;
+   OK_Response   : constant String := "+OK" & CR & LF;
    Null_Response : constant String := "$-1" & CR & LF;
 
    -- Set a given value to the specified cache key
@@ -18,25 +18,25 @@ package body Mozzoni.Commands.Keys is
    --    - SET
    --    - <cachekey>
    --    - <value>
-   procedure Handle_Set  (Client : in out Client_Type;
+   procedure Handle_Set  (Client  : in out Client_Type;
                           Command : Command_Array_Access) is
       use type Ada.Calendar.Time;
 
-      Key_Item : Command_Item := Command (2);
-      Buffer : Unbounded_String := Command (3).Value;
+      Key_Item   : Command_Item := Command (2);
+      Buffer     : Unbounded_String := Command (3).Value;
       Value_Item : Value_Type;
 
       -- Set_Options is a helpful little structure for processing the options
       -- sent on a SET request.
       type Set_Options is record
-         If_Exists : Boolean := False;
-         If_Not_Exists : Boolean := False;
-         Expire_Seconds : Duration := 0.0;
+         If_Exists           : Boolean := False;
+         If_Not_Exists       : Boolean := False;
+         Expire_Seconds      : Duration := 0.0;
          Expire_Milliseconds : Duration := 0.0;
       end record;
 
       function Process_Options (C : Command_Array_Access) return Set_Options is
-         Options : Set_Options;
+         Options        : Set_Options;
          Previous_Value : Unbounded_String := Null_Unbounded_String;
       begin
          if C'Length = 4 then
@@ -94,11 +94,11 @@ package body Mozzoni.Commands.Keys is
    end Handle_Set;
 
 
-   procedure Handle_Get (Client : in out Client_Type;
+   procedure Handle_Get (Client  : in out Client_Type;
                          Command : Command_Array_Access) is
 
       Key_Item : Command_Item := Command (2);
-      Key : constant Unbounded_String := Key_Item.Value;
+      Key      : constant Unbounded_String := Key_Item.Value;
    begin
       Client.Write ('$');
 

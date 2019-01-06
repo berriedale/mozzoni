@@ -28,9 +28,9 @@ package body Mozzoni.Dispatch is
    end Register_Command;
 
 
-   procedure Dispatch_Command (Client : in out Client_Type;
+   procedure Dispatch_Command (Client         : in out Client_Type;
                                Command_Access : in Command_Array_Access) is
-      Command : constant Command_Array := Command_Access.all;
+      Command      : constant Command_Array := Command_Access.all;
       Command_Name : constant Unbounded_String := Command (1).Value;
       Handler      : constant Dispatchable_Type := Dispatches.Element (Available, Command_Name);
    begin
