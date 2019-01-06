@@ -4,6 +4,7 @@
 *.std*
 *.db
 mozzonid
+mozzoni-daemon
 *.bexch
 *.cgpr
 gnatinspect*

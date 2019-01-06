@@ -5,13 +5,11 @@ with Ada.Command_Line;
 with Ada.Exceptions;
 with Ada.Streams;
 with Ada.Text_IO;
-with Alog;
 with Epoll;
 with Interfaces.C;
 
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with GNAT.Sockets; use GNAT.Sockets;
-
 
 with Mozzoni.Command_Loader;
 with Mozzoni.Client;
@@ -40,7 +38,7 @@ procedure Main is
 
       Ch : Character;
    begin
-      Log.Log_Message (Alog.Info, ">> Press 'q' at any time to exit..");
+      Log.Info (">> Press 'q' at any time to exit..");
 
       while Should_Exit = False loop
          Get (Ch);
@@ -102,7 +100,7 @@ begin
    EpollFD := Epoll.Create (1);
 
    if EpollFD = -1 then
-      Log.Log_Message (Alog.Error, "Failed to create epoll(7) file descriptor");
+      Log.Error ("Failed to create epoll(7) file descriptor");
       return;
    end if;
 
@@ -111,9 +109,9 @@ begin
 
    Return_Value := Epoll.Control (EpollFD, Epoll.Epoll_Ctl_Add, To_C (Server_Sock), Server_Event'Access);
 
-   Log.Log_Message (Alog.Info, "mozzinid online and ready for work..");
-   Log.Log_Message (Alog.Info, "epoll descriptor" & Integer'Image (EpollFD));
-   Log.Log_Message (Alog.Info, "server sock" & Integer'Image (To_C (Server_Sock)));
+   Log.Info ("mozzoni-daemon online and ready for work..");
+   Log.Debug ("Epoll descriptor: {1}", (1 => Log.d (EpollFD)));
+   Log.Debug ("Server socket: {1}" , (1 => Log.d (To_C (Server_Sock))));
 
    loop
       if Should_Exit then
@@ -144,6 +142,7 @@ begin
 
                Add_To_Epoll (EpollFD, Client_Socket);
                Mozzoni.Client.Register_Client (Client_Socket);
+               Log.Debug ("Accepting a connection on fd {1}", (1 => Log.d (To_C (Client_Socket))));
 
             elsif (Polled_Event.Events and Epoll.EPOLLIN) > 0 then
 
@@ -151,15 +150,16 @@ begin
                   S : constant Socket_Type := To_Ada (Polled_Event.Data.FD);
                   Client : Mozzoni.Client.Client_Type := Mozzoni.Client.Client_For (S);
                begin
-                  CLient.Read_Available (S);
+                  Client.Read_Available (S);
 
                   if Disconnecting then
+                     Log.Debug ("Disconncting connection on fd {1}", (1 => Log.d (Polled_Event.Data.FD)));
                      Mozzoni.Client.Deregister_Client (S);
                   end if;
 
                exception
                   when Err : others =>
-                     Log.Log_Message (Alog.Error, Ada.Exceptions.Exception_Message (Err));
+                     Log.Error (Ada.Exceptions.Exception_Message (Err));
                      raise;
                end;
 
@@ -170,15 +170,13 @@ begin
                                               null);
 
                if Return_Value > 0 then
-                  Log.Log_Message (Alog.Error,
-                                   "A failure occurred trying to remove the descriptor from epoll(7)");
+                  Log.Error ("A failure occurred trying to remove the descriptor from epoll(7)");
                end if;
 
                Mozzoni.Client.Deregister_Client (To_Ada (Polled_Event.Data.FD));
 
             else
-               Log.Log_Message (Alog.Error,
-                                "Unhandled event type from the event loop:" & Polled_Event.Events'Img);
+               Log.Error ("Unhandled event type from the event loop:" & Polled_Event.Events'Img);
             end if;
          end;
       end loop;

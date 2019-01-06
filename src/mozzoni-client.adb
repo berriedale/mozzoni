@@ -7,7 +7,6 @@ package body Mozzoni.Client is
 
    Terminator : constant String :=  CR & LF;
 
-
    procedure Parse_Available (Client : in out Client_Type) is
 
       Buffer : Unbounded_String := Client.Buffer;
@@ -50,7 +49,7 @@ package body Mozzoni.Client is
                Seek_Index := Next_Terminator;
 
                if Seek_Index = 0 then
-                  Mozzoni.Log.Log_Message (Alog.Warning, "Terminator not found in Parse_Available!");
+                  Log.Warn ("Terminator not found in Parse_Available");
                   return;
                end if;
 
@@ -113,7 +112,7 @@ package body Mozzoni.Client is
          Dispatch_Command (Client, Client.Command);
          Delete (Client.Buffer, 1, Length (Client.Buffer));
       else
-         Mozzoni.Log.Log_Message (Alog.Warning, "Not enough data yet to dispatch");
+         Log.Warn ("Not yet enough data to dispatch!");
       end if;
 
    end Parse_Available;
@@ -141,9 +140,9 @@ package body Mozzoni.Client is
          -- This will happen regularly when profiling, since a SIGPROF will be dispatched
          -- to the process.
            and Mozzoni.Error_Number /= 4 then
-            Mozzoni.Log.Log_Message (Alog.Error, "Errno set while reading socket:" & Integer'Image (Mozzoni.Error_Number));
+            Log.Error ("Errno was set to {1} while attempting to Read_Socket",
+                       (1 => Log.e (Error_Number)));
          end if;
-
 
          -- Nothing went wrong, which means we've got a buffer to work
          Append (Client.Buffer, Buffer (1 .. Bytes_Read));
@@ -224,8 +223,8 @@ package body Mozzoni.Client is
       Client : constant Client_Type := Client_For (Socket);
    begin
       if Close_Socket (Socket) /= 0 then
-         Log.Log_Message (Alog.Error,
-                          "Failed to close socket with " & Integer'Image (Mozzoni.Error_Number));
+         Log.Error ("Failed to close the socket, resulting in the errno: {1}",
+                    (1 => Log.e (Error_Number)));
       end if;
 
       Maps.Delete (Directory, Client.Descriptor);
@@ -233,10 +232,12 @@ package body Mozzoni.Client is
 
 
    procedure Dump_Status is
+      Count : constant Integer := Integer (Maps.Length (Directory));
    begin
-      Log.Log_Message (Alog.Info, "Dumping client statuses");
-      Log.Log_Message (Alog.Info,
-                       Integer (Maps.Length (Directory))'Image);
+
+      Log.Info ("Dumping status");
+      Log.Info ("Currently connected: {1} clients",
+                (1 => Log.i (Count)));
    end Dump_Status;
 
    function Client_For (Descriptor : in Integer) return Client_Type is

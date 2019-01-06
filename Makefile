@@ -1,11 +1,12 @@
 
 OBJDIR:=obj
 GNATTEST_HARNESS_DIR=$(OBJDIR)/gnattest/harness
-GPRFLAGS=-XALOG_VERSION=""
+GPRFLAGS=
 
 all: help
 
-build: $(OBJDIR)/mozzonid ## Build the mozzoni daemon
+build: ## Build the mozzoni daemon
+	gprbuild -Pmozzoni.gpr $(GPRFLAGS)
 
 check: build unit acceptance ## Run all available tests 
 
@@ -25,13 +26,9 @@ prepare-test-harness: ## Compile the GNATtest test harness
 	(cd $(GNATTEST_HARNESS_DIR) && gprbuild -Ptest_driver.gpr $(GPRFLAGS) )
 
 regenerate-test-harness: ## Regenerate the GNATtest test harness from the sources
-	gnat test -dd -Pmozzonid.gpr $(GPRFLAGS)
+	gnat test -dd -Pmozzoni.gpr $(GPRFLAGS)
 
 ##############################
-
-$(OBJDIR)/mozzonid:
-	gprbuild -Pmozzoni.gpr $(GPRFLAGS)
-
 
 # Cute hack thanks to:
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html

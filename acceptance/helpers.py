@@ -6,7 +6,7 @@ import unittest
 class MozzoniTest(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        self.server = subprocess.Popen(['./obj/mozzonid'])
+        self.server = subprocess.Popen(['./obj/mozzoni-daemon'])
         time.sleep(1)
         self.r = redis.Redis(host='localhost',
                 port=6379,

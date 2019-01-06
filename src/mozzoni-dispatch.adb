@@ -35,7 +35,7 @@ package body Mozzoni.Dispatch is
             Handler (Client, Command_Access);
          end;
       else
-         Mozzoni.Log.Log_Message (Alog.Error, "Could not find handler for: " & To_String(Command_Name));
+         Log.Error ("Could not find a suitable handler for {1}", (1 => Command_Name));
       end if;
 
    end Dispatch_Command;

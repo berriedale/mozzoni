@@ -1,6 +1,3 @@
-[submodule "contrib/alog"]
-	path = contrib/alog
-	url = https://git.brokenco.de/ada-libraries/alog.git
-[submodule "contrib/shunit2"]
-	path = contrib/shunit2
-	url = git://github.com/kward/shunit2
+[submodule "contrib/logga"]
+	path = contrib/logga
+	url = https://git.brokenco.de/berriedale/logga.git
