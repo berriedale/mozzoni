@@ -8,6 +8,9 @@ all: help
 build: ## Build the mozzoni daemon
 	gprbuild -Pmozzoni.gpr $(GPRFLAGS)
 
+run: build ## Run the mozzoni-daemon
+	./obj/mozzoni-daemon
+
 check: build unit acceptance ## Run all available tests 
 
 unit: prepare-test-harness ## Run the GNATtest-based unit tests.
@@ -37,4 +40,4 @@ help: ## Display this help text
 
 
 .PHONY: acceptance all build check clean help unit \
-	prepare-test-harness regenerate-test-harness
+	prepare-test-harness regenerate-test-harness run
