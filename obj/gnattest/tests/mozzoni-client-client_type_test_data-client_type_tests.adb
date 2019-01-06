@@ -147,7 +147,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Client_For_bc4703 (Gnattest_T : in out Test_Client_Type) renames Test_1_Client_For;
 --  id:2.2/bc4703174166b521/Client_For/1/0/
    procedure Test_1_Client_For (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:85:4:Client_For
+   --  mozzoni-client.ads:86:4:Client_For
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -166,7 +166,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Client_For_280f2c (Gnattest_T : in out Test_Client_Type) renames Test_2_Client_For;
 --  id:2.2/280f2c7eee8955be/Client_For/0/0/
    procedure Test_2_Client_For (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:91:4:Client_For
+   --  mozzoni-client.ads:93:4:Client_For
 --  end read only
 
       pragma Unreferenced (Gnattest_T);

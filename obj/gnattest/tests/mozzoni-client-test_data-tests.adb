@@ -77,7 +77,7 @@ package body Mozzoni.Client.Test_Data.Tests is
    procedure Test_Deregister_Client_cc045f (Gnattest_T : in out Test) renames Test_Deregister_Client;
 --  id:2.2/cc045f6ce0713995/Deregister_Client/1/0/
    procedure Test_Deregister_Client (Gnattest_T : in out Test) is
-   --  mozzoni-client.ads:73:4:Deregister_Client
+   --  mozzoni-client.ads:74:4:Deregister_Client
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -101,7 +101,7 @@ package body Mozzoni.Client.Test_Data.Tests is
    procedure Test_Dump_Status_ee75bc (Gnattest_T : in out Test) renames Test_Dump_Status;
 --  id:2.2/ee75bcb86b376fe3/Dump_Status/1/0/
    procedure Test_Dump_Status (Gnattest_T : in out Test) is
-   --  mozzoni-client.ads:79:4:Dump_Status
+   --  mozzoni-client.ads:80:4:Dump_Status
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -120,7 +120,7 @@ package body Mozzoni.Client.Test_Data.Tests is
    procedure Test_Hash_Descriptor_c833a5 (Gnattest_T : in out Test) renames Test_Hash_Descriptor;
 --  id:2.2/c833a53e886af8a2/Hash_Descriptor/1/0/
    procedure Test_Hash_Descriptor (Gnattest_T : in out Test) is
-   --  mozzoni-client.ads:98:4:Hash_Descriptor
+   --  mozzoni-client.ads:100:4:Hash_Descriptor
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -142,7 +142,7 @@ package body Mozzoni.Client.Test_Data.Tests is
    procedure Test_Read_Socket_609c7d (Gnattest_T : in out Test) renames Test_Read_Socket;
 --  id:2.2/609c7ddfc531d340/Read_Socket/1/0/
    procedure Test_Read_Socket (Gnattest_T : in out Test) is
-   --  mozzoni-client.ads:109:4:Read_Socket
+   --  mozzoni-client.ads:111:4:Read_Socket
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -162,7 +162,7 @@ package body Mozzoni.Client.Test_Data.Tests is
    procedure Test_Write_Socket_f63b4b (Gnattest_T : in out Test) renames Test_Write_Socket;
 --  id:2.2/f63b4b647f6092f6/Write_Socket/1/0/
    procedure Test_Write_Socket (Gnattest_T : in out Test) is
-   --  mozzoni-client.ads:116:4:Write_Socket
+   --  mozzoni-client.ads:118:4:Write_Socket
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -182,7 +182,7 @@ package body Mozzoni.Client.Test_Data.Tests is
    procedure Test_Close_Socket_73424d (Gnattest_T : in out Test) renames Test_Close_Socket;
 --  id:2.2/73424da53916b082/Close_Socket/1/0/
    procedure Test_Close_Socket (Gnattest_T : in out Test) is
-   --  mozzoni-client.ads:123:4:Close_Socket
+   --  mozzoni-client.ads:125:4:Close_Socket
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -194,6 +194,26 @@ package body Mozzoni.Client.Test_Data.Tests is
 
 --  begin read only
    end Test_Close_Socket;
+--  end read only
+
+
+--  begin read only
+   procedure Test_Flush_All_Clients (Gnattest_T : in out Test);
+   procedure Test_Flush_All_Clients_a897d3 (Gnattest_T : in out Test) renames Test_Flush_All_Clients;
+--  id:2.2/a897d32357bb297b/Flush_All_Clients/1/0/
+   procedure Test_Flush_All_Clients (Gnattest_T : in out Test) is
+   --  mozzoni-client.ads:132:4:Flush_All_Clients
+--  end read only
+
+      pragma Unreferenced (Gnattest_T);
+
+   begin
+
+      -- Called on every set up, no-op
+      null;
+
+--  begin read only
+   end Test_Flush_All_Clients;
 --  end read only
 
 --  begin read only

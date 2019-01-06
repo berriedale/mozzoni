@@ -7,7 +7,6 @@
 
 with AUnit.Assertions; use AUnit.Assertions;
 with System.Assertions;
-with Ada.Characters.Latin_1;
 
 --  begin read only
 --  id:2.2/00/
@@ -15,6 +14,8 @@ with Ada.Characters.Latin_1;
 --  This section can be used to add with clauses if necessary.
 --
 --  end read only
+
+with Ada.Characters.Latin_1;
 
 --  begin read only
 --  end read only
