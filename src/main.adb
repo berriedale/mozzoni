@@ -152,7 +152,7 @@ begin
                   S : constant Socket_Type := To_Ada (Polled_Event.Data.FD);
                   Client : Mozzoni.Client.Client_Type := Mozzoni.Client.Client_For (S);
                begin
-                  Client.Read_Available (S);
+                  Client.Read_Available;
 
                   if Disconnecting then
                      Log.Debug ("Disconncting connection on fd {1}", (1 => Log.d (Polled_Event.Data.FD)));

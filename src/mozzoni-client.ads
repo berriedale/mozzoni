@@ -5,9 +5,9 @@ with Ada.Containers.Hashed_Maps; use Ada.Containers;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with GNAT.Sockets; use GNAT.Sockets;
 
-package Mozzoni.Client is
+private with Ada.Characters.Latin_1;
 
-   Read_Buffer_Size : constant := 128;
+package Mozzoni.Client is
 
    type Client_Type is tagged record
       Descriptor        : Integer;
@@ -22,14 +22,39 @@ package Mozzoni.Client is
       -- IP Address
       -- Client_Port_Number
    end record;
-   procedure Read_Available (Client : in out Client_Type; Socket : in Socket_Type);
+
+   -- Determine whether the client data structure is valid
+   --
+   -- @param Client
+   function Is_Valid (Client : in Client_Type) return Boolean;
+
+   -- Read and parse the bytes available on the given client's socket
+   --
+   -- @param Client a valid Client_Type
+   procedure Read_Available (Client : in out Client_Type)
+     with Pre => Is_Valid (Client);
+
+   -- Write the given buffer out to the client
+   --
+   -- @param Buffer a non-zero length string
    procedure Write (Client : in out Client_Type;
                     Buffer : in String);
+
+   -- Write the given character out to the client
+   --
+   -- @param Char any valid character
    procedure Write (Client : in out Client_Type;
-                    Char : in Character);
+                    Char   : in Character);
+
+   -- Write the given number out to the client as a literal string.
+   --
+   -- NOTE: this procedure is not going to result in writing an integer to the
+   -- socket, but rather a string representation of the integer which is what
+   -- the underlying protocol expects
+   --
+   -- @param Number a number
    procedure Write (Client : in out Client_Type;
                     Number : in Natural);
-   function Is_Valid (Client : in Client_Type) return Boolean;
 
    -- Determine whether a Client is registered
    --
@@ -37,8 +62,11 @@ package Mozzoni.Client is
    -- @return True when the Descriptor has already be registered.
    function Has_Client (Descriptor : in Socket_Type) return Boolean;
 
-
-   procedure Register_Client (Socket : in Socket_Type);
+   -- Register a client structure using the given Socket as a key
+   --
+   -- @param Socket a valid Socket_Type which can be considered a unique identifier
+   procedure Register_Client (Socket : in Socket_Type)
+     with Post => Has_Client (Socket);
 
    -- Remove a Client by its specified socket.
    --
@@ -51,8 +79,23 @@ package Mozzoni.Client is
    -- about the current state of the registered Clients
    procedure Dump_Status;
 
-   function Client_For (Descriptor : in Integer) return Client_Type;
+   -- Look up the client given an integer file descriptor
+   --
+   -- @param Descriptor a file descriptor, typically from C
+   -- @return Client_Type the registered client corresponding to the descriptor;
+   function Client_For (Descriptor : in Integer) return Client_Type
+     with Pre => Descriptor > 0;
+
+   -- Look up the client given a Socket_Type file descriptor
+   --
+   -- @param Descriptor a socket
+   -- @return Client_Type the registered client corresponding to the socket
    function Client_For (Descriptor : in Socket_Type) return Client_Type;
+
+
+private
+
+   use Ada.Characters.Latin_1;
 
    function Hash_Descriptor (D : in Integer) return Hash_Type;
 
@@ -61,10 +104,9 @@ package Mozzoni.Client is
                                                    Hash            => Hash_Descriptor,
                                                    Equivalent_Keys => "=");
 
-   Directory : Maps.Map;
-
-
-
+   Read_Buffer_Size : constant := 128;
+   Directory        : Maps.Map;
+   Terminator       : constant String :=  CR & LF;
 
    function Read_Socket (S      : in Socket_Type;
                          Buffer : in System.Address;
@@ -85,5 +127,8 @@ package Mozzoni.Client is
        Link_Name => "close",
        Convention => C;
 
+   -- This procedure is only intended to be invoked in tests. It will destroy
+   -- *ALL* state for currently registered clients;
+   procedure Flush_All_Clients;
 
 end Mozzoni.Client;
