@@ -36,6 +36,95 @@ acceptance` will run the Python-based black-box acceptance tests which verify
 the client-facing behavior of Mozzoni.
 
 
+== Compatibility
+
+Mozzoni aims to be protocol compatible with
+link:https://redis.io[redis]
+and the tables below document the current command compatibility.
+
+[CAUTION]
+====
+Some error strings and codes may differ between Mozzoni and redis
+====
+
+.Keys
+|===
+
+| `DEL`
+| :frog:
+
+| `DUMP`
+| :x:
+
+| `EXISTS`
+| :frog:
+
+| `EXPIRE`
+| :x:
+
+| `EXPIREAT`
+| :x:
+
+| `KEYS`
+| :x:
+
+| `MIGRATE`
+| :x:
+
+| `MOVE`
+| :x:
+
+| `OBJECT`
+| :x:
+
+| `PERSIST`
+| :x:
+
+| `PEXPIRE`
+| :x:
+
+| `PEXPIREAT`
+| :x:
+
+| :x:
+
+| `PTTL`
+| :x:
+
+| `RANDOMKEY`
+| :x:
+
+| `RENAME`
+| :x:
+
+| `RENAMENX`
+| :x:
+
+| `RESTORE`
+| :x:
+
+| `SORT`
+| :x:
+
+| `TOUCH`
+| :x:
+
+| `TTL`
+| :x:
+
+| `TYPE`
+| :x:
+
+| `UNLINK`
+| :x:
+
+| `WAIT`
+| :x:
+
+| `SCAN`
+| :x:
+
+|===
 
 == Benchmarking
 
