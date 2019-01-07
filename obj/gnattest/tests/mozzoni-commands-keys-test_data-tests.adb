@@ -88,6 +88,26 @@ package body Mozzoni.Commands.Keys.Test_Data.Tests is
    end Test_Handle_Exists;
 --  end read only
 
+
+--  begin read only
+   procedure Test_Handle_Del (Gnattest_T : in out Test);
+   procedure Test_Handle_Del_5cffb1 (Gnattest_T : in out Test) renames Test_Handle_Del;
+--  id:2.2/5cffb1c598ea6391/Handle_Del/1/0/
+   procedure Test_Handle_Del (Gnattest_T : in out Test) is
+   --  mozzoni-commands-keys.ads:20:4:Handle_Del
+--  end read only
+
+      pragma Unreferenced (Gnattest_T);
+
+   begin
+
+      -- covered more effectively by acceptance tests at the moment
+      null;
+
+--  begin read only
+   end Test_Handle_Del;
+--  end read only
+
 --  begin read only
 --  id:2.2/02/
 --
