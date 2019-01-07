@@ -49,6 +49,7 @@ Some error strings and codes may differ between Mozzoni and redis
 
 .Keys
 |===
+| Command | Status
 
 | `DEL`
 | :frog:
