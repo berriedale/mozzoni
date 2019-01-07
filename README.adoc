@@ -201,6 +201,30 @@ Some error strings and codes may differ between Mozzoni and redis
 | `STRLEN`
 | :x:
 
+|===
+
+
+.Connection
+|===
+| Command | Status
+
+| `AUTH`
+| :x:
+
+| `ECHO`
+| :x:
+
+| `PING`
+| :frog:
+
+| `QUIT`
+| :x:
+
+| `SELECT`
+| :x:
+
+| `SWAPDB`
+| :x:
 
 |===
 
