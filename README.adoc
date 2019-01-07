@@ -87,8 +87,6 @@ Some error strings and codes may differ between Mozzoni and redis
 | `PEXPIREAT`
 | :x:
 
-| :x:
-
 | `PTTL`
 | :x:
 
@@ -124,6 +122,85 @@ Some error strings and codes may differ between Mozzoni and redis
 
 | `SCAN`
 | :x:
+
+|===
+
+.Strings
+|===
+| Command | Status
+
+| `APPEND`
+| :x:
+
+| `BITCOUNT`
+| :x:
+
+| `BITFIELD`
+| :x:
+
+| `BITOP`
+| :x:
+
+| `BITPOS`
+| :x:
+
+| `DECR`
+| :x:
+
+| `DECRBY`
+| :x:
+
+| `GET`
+| :frog:
+
+| `GETBIT`
+| :x:
+
+| `GETRANGE`
+| :x:
+
+| `GETSET`
+| :x:
+
+| `INCR`
+| :x:
+
+| `INCRBY`
+| :x:
+
+| `INCRBYFLOAT`
+| :x:
+
+| `MGET`
+| :x:
+
+| `MSET`
+| :x:
+
+| `MSETNX`
+| :x:
+
+| `PSETEX`
+| :x:
+
+| `SET`
+| :frog:
+
+| `SETBIT`
+| :x:
+
+| `SETEX`
+| :x:
+
+| `SETNX`
+| :x:
+
+| `SETRANGE`
+| :x:
+
+| `STRLEN`
+| :x:
+
 
 |===
 
