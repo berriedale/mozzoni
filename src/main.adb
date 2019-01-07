@@ -162,7 +162,6 @@ begin
                exception
                   when Err : others =>
                      Log.Error (Ada.Exceptions.Exception_Message (Err));
-                     raise;
                end;
 
             elsif Disconnecting then

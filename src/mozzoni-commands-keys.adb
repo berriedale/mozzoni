@@ -111,7 +111,7 @@ package body Mozzoni.Commands.Keys is
          Value : constant Value_Type :=  KeyValue.Get (Key);
       begin
          Client.Write (Length (Value.Buffer));
-         Client.Write (CR & LF);
+         Client.Write_Line_Ending;
          Client.Write (Prepare_Response (Value.Buffer));
       end;
 

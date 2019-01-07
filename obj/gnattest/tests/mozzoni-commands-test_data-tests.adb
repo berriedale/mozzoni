@@ -78,23 +78,22 @@ package body Mozzoni.Commands.Test_Data.Tests is
 
 
 --  begin read only
-   procedure Test_Handle_Ping (Gnattest_T : in out Test);
-   procedure Test_Handle_Ping_9b89ba (Gnattest_T : in out Test) renames Test_Handle_Ping;
---  id:2.2/9b89baf367524907/Handle_Ping/1/0/
-   procedure Test_Handle_Ping (Gnattest_T : in out Test) is
-   --  mozzoni-commands.ads:14:4:Handle_Ping
+   --  procedure Test_Handle_Ping (Gnattest_T : in out Test_);
+   --  procedure Test_Handle_Ping_9b89ba (Gnattest_T : in out Test_) renames Test_Handle_Ping;
+--  id:2.2/9b89baf367524907/Handle_Ping/1/1/
+   --  procedure Test_Handle_Ping (Gnattest_T : in out Test_) is
 --  end read only
-
-      pragma Unreferenced (Gnattest_T);
-
-   begin
-
-      -- No-opping this test, not really worth the effort. Acceptance tests cover
-      -- this.
-      null;
-
+--  
+--        pragma Unreferenced (Gnattest_T);
+--  
+--     begin
+--  
+--        -- No-opping this test, not really worth the effort. Acceptance tests cover
+--        -- this.
+--        null;
+--  
 --  begin read only
-   end Test_Handle_Ping;
+   --  end Test_Handle_Ping;
 --  end read only
 
 --  begin read only

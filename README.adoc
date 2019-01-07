@@ -212,13 +212,13 @@ Some error strings and codes may differ between Mozzoni and redis
 | :x:
 
 | `ECHO`
-| :x:
+| :frog:
 
 | `PING`
 | :frog:
 
 | `QUIT`
-| :x:
+| :frog:
 
 | `SELECT`
 | :x:

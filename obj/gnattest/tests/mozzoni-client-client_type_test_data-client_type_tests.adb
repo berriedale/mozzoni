@@ -47,7 +47,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Is_Valid_ef2a98 (Gnattest_T : in out Test_Client_Type) renames Test_Is_Valid;
 --  id:2.2/ef2a987f54e227e4/Is_Valid/1/0/
    procedure Test_Is_Valid (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:29:4:Is_Valid
+   --  mozzoni-client.ads:31:4:Is_Valid
 --  end read only
 
 
@@ -67,7 +67,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Read_Available_f8f154 (Gnattest_T : in out Test_Client_Type) renames Test_Read_Available;
 --  id:2.2/f8f1540f1aba8e29/Read_Available/1/0/
    procedure Test_Read_Available (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:34:4:Read_Available
+   --  mozzoni-client.ads:36:4:Read_Available
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -87,7 +87,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Write_8c9d70 (Gnattest_T : in out Test_Client_Type) renames Test_1_Write;
 --  id:2.2/8c9d7061edeeea0a/Write/1/0/
    procedure Test_1_Write (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:40:4:Write
+   --  mozzoni-client.ads:42:4:Write
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -107,7 +107,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Write_1a9cb5 (Gnattest_T : in out Test_Client_Type) renames Test_2_Write;
 --  id:2.2/1a9cb59ddb076acf/Write/0/0/
    procedure Test_2_Write (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:46:4:Write
+   --  mozzoni-client.ads:48:4:Write
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -127,7 +127,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Write_7f6e4c (Gnattest_T : in out Test_Client_Type) renames Test_3_Write;
 --  id:2.2/7f6e4cf27e1eb94b/Write/0/0/
    procedure Test_3_Write (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:56:4:Write
+   --  mozzoni-client.ads:58:4:Write
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -147,7 +147,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Write_Line_Ending_579bd3 (Gnattest_T : in out Test_Client_Type) renames Test_Write_Line_Ending;
 --  id:2.2/579bd35a577c3831/Write_Line_Ending/1/0/
    procedure Test_Write_Line_Ending (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:60:4:Write_Line_Ending
+   --  mozzoni-client.ads:62:4:Write_Line_Ending
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -167,7 +167,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Client_For_bc4703 (Gnattest_T : in out Test_Client_Type) renames Test_1_Client_For;
 --  id:2.2/bc4703174166b521/Client_For/1/0/
    procedure Test_1_Client_For (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:89:4:Client_For
+   --  mozzoni-client.ads:91:4:Client_For
 --  end read only
 
       pragma Unreferenced (Gnattest_T);
@@ -186,7 +186,7 @@ package body Mozzoni.Client.Client_Type_Test_Data.Client_Type_Tests is
    procedure Test_Client_For_280f2c (Gnattest_T : in out Test_Client_Type) renames Test_2_Client_For;
 --  id:2.2/280f2c7eee8955be/Client_For/0/0/
    procedure Test_2_Client_For (Gnattest_T : in out Test_Client_Type) is
-   --  mozzoni-client.ads:96:4:Client_For
+   --  mozzoni-client.ads:98:4:Client_For
 --  end read only
 
       pragma Unreferenced (Gnattest_T);

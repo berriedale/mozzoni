@@ -9,6 +9,8 @@ private with Ada.Characters.Latin_1;
 
 package Mozzoni.Client is
 
+   Disconnect_Client : exception;
+
    type Client_Type is tagged record
       Descriptor        : Integer;
       Socket            : Socket_Type;

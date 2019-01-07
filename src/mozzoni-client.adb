@@ -1,4 +1,5 @@
 with Ada.Characters.Latin_1;
+with Ada.Exceptions;
 
 with Mozzoni.Dispatch; use Mozzoni.Dispatch;
 
@@ -258,6 +259,11 @@ package body Mozzoni.Client is
       else
          Log.Warn ("Not yet enough data to dispatch!");
       end if;
+   exception
+      when Disconnect_Client =>
+         Close_Socket (Client.Socket);
+      when Err : others =>
+         Log.Error (Ada.Exceptions.Exception_Message (Err));
 
    end Parse_Available;
 

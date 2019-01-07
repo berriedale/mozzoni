@@ -15,10 +15,4 @@ package body Mozzoni.Commands is
    end Prepare_Response;
 
 
-   procedure Handle_Ping (Client  : in out Client_Type;
-                          Command : Command_Array_Access) is
-   begin
-      Client.Write (Prepare_Response ("+PONG"));
-   end Handle_Ping;
-
 end Mozzoni.Commands;
